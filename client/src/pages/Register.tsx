@@ -22,14 +22,15 @@ function Register() {
     register,
     handleSubmit,
     getValues,
+
     formState: { errors },
   } = useForm<RegisterFormData>();
 
   const mutation = useMutation(apiClient.register, {
     onSuccess: async () => {
-      toast.success("Successfully registred");
+      toast.success("Please verify your email then log in");
       await queryClient.invalidateQueries("validateToken");
-      navigate("/");
+      navigate("/login");
     },
     onError: (error: Error) => {
       toast.error(error.message);

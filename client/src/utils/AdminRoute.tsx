@@ -8,7 +8,7 @@ type AdminRouteProps = {
 function AdminRoute({ children }: AdminRouteProps) {
   const { isLoggedIn, userInfo } = useAppContext();
 
-  if (!isLoggedIn && userInfo?.userRole !== "superAdmin") {
+  if (!isLoggedIn && userInfo.userRole !== "superAdmin") {
     return <Navigate to="/" replace />;
   }
 

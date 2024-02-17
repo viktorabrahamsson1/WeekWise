@@ -8,6 +8,8 @@ export type UserType = {
   email: string;
   password: string;
   role: string;
+  isVerified: boolean;
+  verificationToken: string;
 };
 
 const userSchema = new mongoose.Schema({
@@ -21,6 +23,8 @@ const userSchema = new mongoose.Schema({
     default: "user",
     enum: ["user", "admin", "superAdmin"],
   },
+  isVerified: { type: Boolean, required: true, default: false },
+  verificationToken: { type: String, required: true },
 });
 
 userSchema.pre("save", async function (next) {

@@ -29,6 +29,10 @@ router.post(
         return res.status(400).json({ message: "Invalid credentials" });
       }
 
+      if (!user.isVerified) {
+        return res.status(400).json({ message: "Email not verified" });
+      }
+
       const isMatch = await bcrypt.compare(password, user.password);
 
       if (!isMatch) {
@@ -37,7 +41,6 @@ router.post(
         });
       }
 
-      //! Create auth token with data stored in it
       createAuthToken(req, res, user);
 
       res.status(200).json({ userId: user.id });
@@ -54,6 +57,7 @@ router.get("/validate-token", verifyToken, (req: Request, res: Response) => {
     firstName: req.firstName,
     lastName: req.lastName,
     email: req.email,
+    isVerified: req.isVerified,
   });
 });
 

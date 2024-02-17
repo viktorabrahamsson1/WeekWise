@@ -2,6 +2,9 @@ import express, { Request, Response } from "express";
 import User from "../models/user";
 import { check, validationResult } from "express-validator";
 import createAuthToken from "../utils/authToken";
+import crypto from "crypto";
+import { sendVerificationEmail } from "../utils/sendVerificationEmail ";
+import verifyToken from "../middleware/verifyAuthToken";
 
 const router = express.Router();
 
@@ -31,10 +34,13 @@ router.post(
         });
       }
 
-      user = new User(req.body);
+      const verificationToken = crypto.randomBytes(20).toString("hex");
+
+      user = new User({ ...req.body, isVerified: false, verificationToken });
       await user.save();
 
-      //! Create auth token with data stored in it
+      sendVerificationEmail(req.body.email, verificationToken);
+
       createAuthToken(req, res, user);
 
       return res.status(200).json({ message: "Account created" });
@@ -44,5 +50,29 @@ router.post(
     }
   }
 );
+
+router.get("/register/verify/:token", async (req: Request, res: Response) => {
+  const { token } = req.params;
+  try {
+    const user = await User.findOne({ verificationToken: token.toString() });
+
+    if (!user) {
+      return res.status(400).json({ message: "Invalid Token" });
+    }
+    console.log(user);
+    user.isVerified = true;
+    user.verificationToken = "";
+    await User.updateOne(
+      { verificationToken: token },
+      { $set: { isVerified: true, verificationToken: "" } }
+    );
+
+    console.log(user);
+
+    res.status(200).send("Email verified");
+  } catch (error) {
+    res.status(500).json({ message: "Error validating email" });
+  }
+});
 
 export default router;

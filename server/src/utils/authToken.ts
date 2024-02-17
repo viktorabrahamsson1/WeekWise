@@ -10,6 +10,7 @@ const createAuthToken = (req: Request, res: Response, user: UserType) => {
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
+      isVerified: user.isVerified,
     },
     process.env.JWT_SECRET_KEY as string,
     {

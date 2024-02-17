@@ -9,6 +9,7 @@ declare global {
       firstName: string;
       lastName: string;
       email: string;
+      isVerified: boolean;
     }
   }
 }
@@ -26,6 +27,7 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
     req.firstName = (decoded as JwtPayload).firstName;
     req.lastName = (decoded as JwtPayload).lastName;
     req.email = (decoded as JwtPayload).email;
+    req.isVerified = (decoded as JwtPayload).isVerified;
 
     next();
   } catch (error) {

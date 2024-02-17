@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 
-import useContextData from "../hooks/useContext";
+import useAuthData from "../hooks/useAuth";
 
 type AppContext = {
+  isLoading: boolean;
   isLoggedIn: boolean;
   userInfo: {
     userId: string;
@@ -10,6 +11,7 @@ type AppContext = {
     firstName: string;
     lastName: string;
     email: string;
+    isVerified: boolean;
   };
 };
 
@@ -20,13 +22,14 @@ type AppContextProviderProps = {
 const AppContext = React.createContext<AppContext | undefined>(undefined);
 
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
-  const { isError, userInfo } = useContextData();
+  const { userInfo, isLoading, isLoggedIn } = useAuthData();
 
   return (
     <AppContext.Provider
       value={{
-        isLoggedIn: !isError,
         userInfo,
+        isLoading,
+        isLoggedIn,
       }}
     >
       {children}
@@ -36,5 +39,8 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
 
 export const useAppContext = () => {
   const context = useContext(AppContext);
+  if (context === undefined) {
+    throw new Error("useAppContext must be used within a appcontextProvider");
+  }
   return context as AppContext;
 };

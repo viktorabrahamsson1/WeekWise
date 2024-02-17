@@ -51,7 +51,7 @@ function ChangeUserInfo() {
         <div className="flex flex-1 flex-col flex-wrap gap-4 sm:flex-row ">
           <div className="flex flex-1 flex-col flex-wrap gap-1">
             <input
-              defaultValue={userInfo?.firstName}
+              defaultValue={userInfo.firstName}
               placeholder="first name"
               {...register("firstName", {
                 minLength: {
@@ -69,7 +69,7 @@ function ChangeUserInfo() {
           </div>
           <div className="flex flex-1 flex-col flex-wrap gap-1">
             <input
-              defaultValue={userInfo?.firstName}
+              defaultValue={userInfo.firstName}
               placeholder="last name"
               {...register("lastName", {
                 minLength: {
@@ -90,7 +90,7 @@ function ChangeUserInfo() {
       <label className="flex flex-col justify-between gap-8 py-4 sm:flex-row">
         <h3 className="text-md flex-1  font-bold">Email adress</h3>
         <input
-          defaultValue={userInfo?.email}
+          defaultValue={userInfo.email}
           type="email"
           {...register("email")}
           className="flex-1 rounded-md border px-3 py-1 duration-150 dark:bg-slate-700 dark:placeholder:text-gray-200"
@@ -109,7 +109,7 @@ function ChangeUserInfo() {
         <input
           type="password"
           {...register("confirmPassword")}
-          className="flex-1 rounded-md border px-3 py-1 duration-150 dark:bg-slate-700 dark:placeholder:text-gray-200"
+          className="flex-1 rounded-md border px-3 py-1 duration-150 focus:outline-1 focus:outline-offset-1 focus:outline-gray-200 dark:bg-slate-700 dark:placeholder:text-gray-200"
         />
       </label>
       <button

@@ -9,8 +9,12 @@ import HomePage from "./pages/HomePage";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import AdminRoute from "./utils/AdminRoute";
 import ChangeUserInfo from "./routes/ChangeUserInfo";
-import Users from "./routes/admin/Users";
-import Dashboard from "./routes/admin/Dashboard";
+import Users from "./routes/admin routes/Users";
+import Dashboard from "./routes/admin routes/Dashboard";
+import Calender from "./routes/Calender";
+import Send from "./routes/Send";
+import Retrived from "./routes/Retrived";
+import VerifyEmail from "./pages/VerifyEmail";
 
 export default function App() {
   return (
@@ -29,15 +33,16 @@ export default function App() {
             path="/calender"
             element={
               <ProtectedRoute>
-                <HomePage />
+                <Calender />
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/send"
             element={
               <ProtectedRoute>
-                <HomePage />
+                <Send />
               </ProtectedRoute>
             }
           />
@@ -45,7 +50,7 @@ export default function App() {
             path="/retrived"
             element={
               <ProtectedRoute>
-                <HomePage />
+                <Retrived />
               </ProtectedRoute>
             }
           />
@@ -76,6 +81,7 @@ export default function App() {
           />
         </Route>
         <Route path="/register" element={<Register />} />
+        <Route path="/register/:token" element={<VerifyEmail />} />
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
