@@ -7,7 +7,8 @@ export const sendVerificationEmail = (email: string, token: string) => {
     from: "Viktor Abrahamsson at WeekWise.se",
     to: email,
     subject: "Verify Email",
-    html: `<div>Please click on this link <a href="${frontEndUrl}/register/${token}">${frontEndUrl}</a> to verify your email</div>`,
+    html: `<div>Hi 👋, Please click on this link <a href="${frontEndUrl}/register/${token}">${frontEndUrl}</a> to verify your email \n 
+    <span>Please check your spam folder if the email does not appear.</span> </div>`,
   };
 
   transporter.sendMail(mailOptions, (error, info) => {

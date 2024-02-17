@@ -10,9 +10,9 @@ export type RegisterFormData = {
   firstName: string;
   lastName: string;
   email: string;
-  profilePicture?: string;
   password: string;
   confirmPassword: string;
+  profilePicture?: string; //! Fix
 };
 
 function Register() {
@@ -22,9 +22,12 @@ function Register() {
     register,
     handleSubmit,
     getValues,
-
     formState: { errors },
-  } = useForm<RegisterFormData>();
+  } = useForm<RegisterFormData>({
+    defaultValues: {
+      profilePicture: "defaultUser.png",
+    },
+  });
 
   const mutation = useMutation(apiClient.register, {
     onSuccess: async () => {
@@ -126,6 +129,10 @@ function Register() {
               {errors.confirmPassword.message}
             </span>
           )}
+        </label>
+        <label className="flex flex-col gap-2 font-bold text-gray-700 dark:text-gray-300">
+          Profile Picture
+          <input type="file" {...register("profilePicture")} />
         </label>
 
         <span className="flex">

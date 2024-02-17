@@ -126,6 +126,9 @@ function SideBarSmall({ isOpen, setIsOpen }: SideBarSmallProps) {
           />
         )}
       </div>
+      <p className=" mx-auto mt-auto text-nowrap text-[8px] text-gray-400">
+        Copyright &copy; 2024 by Viktor Abrahamsson
+      </p>
     </div>
   );
 }

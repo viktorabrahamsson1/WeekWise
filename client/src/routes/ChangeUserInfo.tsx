@@ -92,7 +92,16 @@ function ChangeUserInfo() {
         <input
           defaultValue={userInfo.email}
           type="email"
-          {...register("email")}
+          {...register("email", {
+            minLength: {
+              value: 3,
+              message: "at least 3 characters",
+            },
+            maxLength: {
+              value: 100,
+              message: "To many characters",
+            },
+          })}
           className="flex-1 rounded-md border px-3 py-1 duration-150 dark:bg-slate-700 dark:placeholder:text-gray-200"
         />
       </label>
