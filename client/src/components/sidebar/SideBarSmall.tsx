@@ -24,12 +24,12 @@ function SideBarSmall({ isOpen, setIsOpen }: SideBarSmallProps) {
 
   return (
     <div
-      className={`${isOpen ? "translate-x-0" : "-translate-x-full"} absolute left-0 top-0 z-50 flex h-full flex-col gap-16 border-r-[1px] border-blue-800 bg-blue-700 px-6 py-4 transition-all duration-300 ease-in-out dark:border-r-gray-700 dark:bg-slate-800 lg:hidden  `}
+      className={`${isOpen ? "translate-x-0" : "-translate-x-full"} absolute left-0 top-0 z-50 flex h-full flex-col gap-16 border-r-[1px] bg-white px-6 py-4 transition-all duration-300 ease-in-out dark:border-r-gray-700 dark:bg-slate-800 lg:hidden  `}
     >
       <div className="relative flex items-center gap-6 ">
         <Link
           to="/"
-          className="pt-8 text-3xl font-bold text-white dark:text-gray-300"
+          className="mx-auto pt-8 text-3xl font-bold text-gray-600 dark:text-gray-300"
         >
           WeekWise
         </Link>
@@ -37,7 +37,7 @@ function SideBarSmall({ isOpen, setIsOpen }: SideBarSmallProps) {
           onClick={() => setIsOpen((open) => !open)}
           fontSize={28}
           cursor="pointer"
-          className="absolute right-[-10px] top-0 duration-150 hover:text-white dark:text-gray-300 dark:hover:text-gray-600"
+          className="absolute right-[-10px] top-0 duration-150 hover:text-slate-600 dark:text-gray-300 dark:hover:text-gray-600"
         />
       </div>
       <div className="flex flex-col gap-4">
@@ -50,7 +50,7 @@ function SideBarSmall({ isOpen, setIsOpen }: SideBarSmallProps) {
           icon={
             <HiOutlineHome
               fontSize={24}
-              className="text-gray-200 duration-150 group-hover:text-white"
+              className="text-slate-600 duration-150 group-hover:text-white dark:text-gray-300"
             />
           }
         />
@@ -63,7 +63,7 @@ function SideBarSmall({ isOpen, setIsOpen }: SideBarSmallProps) {
           icon={
             <HiOutlineCalendarDays
               fontSize={24}
-              className="text-gray-200 duration-150 group-hover:text-white"
+              className="text-slate-600 duration-150 group-hover:text-white dark:text-gray-300"
             />
           }
         />
@@ -76,7 +76,7 @@ function SideBarSmall({ isOpen, setIsOpen }: SideBarSmallProps) {
           icon={
             <HiOutlinePaperAirplane
               fontSize={24}
-              className="text-gray-200 duration-150 group-hover:text-white"
+              className="text-slate-600 duration-150 group-hover:text-white dark:text-gray-300"
             />
           }
         />
@@ -89,12 +89,12 @@ function SideBarSmall({ isOpen, setIsOpen }: SideBarSmallProps) {
           icon={
             <HiOutlineEnvelope
               fontSize={24}
-              className="text-gray-200 duration-150 group-hover:text-white"
+              className="text-slate-600 duration-150 group-hover:text-white dark:text-gray-300"
             />
           }
         />
 
-        {userInfo?.userRole === "superAdmin" && (
+        {userInfo.userRole === "superAdmin" && (
           <SideBarLink
             name="Users"
             path="/users"
@@ -104,13 +104,13 @@ function SideBarSmall({ isOpen, setIsOpen }: SideBarSmallProps) {
             icon={
               <HiOutlineUsers
                 fontSize={24}
-                className="text-gray-200 duration-150 group-hover:text-white"
+                className="text-slate-600 duration-150 group-hover:text-white dark:text-gray-300"
               />
             }
           />
         )}
 
-        {userInfo?.userRole === "superAdmin" && (
+        {userInfo.userRole === "superAdmin" && (
           <SideBarLink
             name="Dashboard"
             path="/dashboard"
@@ -120,7 +120,7 @@ function SideBarSmall({ isOpen, setIsOpen }: SideBarSmallProps) {
             icon={
               <HiOutlineChartBarSquare
                 fontSize={24}
-                className="text-gray-200 duration-150 group-hover:text-white"
+                className="text-slate-600 duration-150 group-hover:text-white dark:text-gray-300"
               />
             }
           />

@@ -21,11 +21,11 @@ function SideBar({ setIsOpen }: SideBarSmallProps) {
   const { userInfo } = useAppContext();
 
   return (
-    <aside className="z-10 row-span-full hidden flex-col gap-16 border-r-[1px] border-blue-800 bg-blue-700 px-4 py-6 duration-150 dark:border-r-gray-700 dark:bg-slate-800 lg:flex ">
+    <aside className="z-10 row-span-full hidden flex-col gap-16 border-slate-200 px-4 py-6 shadow-md duration-150 dark:border-r-[1px] dark:border-r-gray-700 dark:bg-slate-800 lg:flex  ">
       <Link
         onClick={() => handleSetActiveLink("/")}
         to="/"
-        className="text-center text-3xl font-bold text-white dark:text-gray-300"
+        className="text-center text-3xl font-bold text-gray-600 dark:text-gray-300"
       >
         WeekWise
       </Link>
@@ -39,7 +39,7 @@ function SideBar({ setIsOpen }: SideBarSmallProps) {
           icon={
             <HiOutlineHome
               fontSize={24}
-              className="text-gray-200 duration-150 group-hover:text-white"
+              className=" duration-150 group-hover:text-white dark:text-gray-300"
             />
           }
         />
@@ -52,7 +52,7 @@ function SideBar({ setIsOpen }: SideBarSmallProps) {
           icon={
             <HiOutlineCalendarDays
               fontSize={24}
-              className="text-gray-200 duration-150 group-hover:text-white"
+              className="text-slate-700 duration-150 group-hover:text-white dark:text-gray-300"
             />
           }
         />
@@ -65,7 +65,7 @@ function SideBar({ setIsOpen }: SideBarSmallProps) {
           icon={
             <HiOutlinePaperAirplane
               fontSize={24}
-              className="text-gray-200 duration-150 group-hover:text-white"
+              className="text-slate-700 duration-150 group-hover:text-white dark:text-gray-300"
             />
           }
         />
@@ -78,12 +78,12 @@ function SideBar({ setIsOpen }: SideBarSmallProps) {
           icon={
             <HiOutlineEnvelope
               fontSize={24}
-              className="text-gray-200 duration-150 group-hover:text-white"
+              className="text-slate-700 duration-150 group-hover:text-white dark:text-gray-300"
             />
           }
         />
 
-        {userInfo?.userRole === "superAdmin" && (
+        {userInfo.userRole === "superAdmin" && (
           <SideBarLink
             name="Users"
             path="/users"
@@ -93,12 +93,12 @@ function SideBar({ setIsOpen }: SideBarSmallProps) {
             icon={
               <HiOutlineUsers
                 fontSize={24}
-                className="text-gray-200 duration-150 group-hover:text-white"
+                className="text-slate-700 duration-150 group-hover:text-white dark:text-gray-300"
               />
             }
           />
         )}
-        {userInfo?.userRole === "superAdmin" && (
+        {userInfo.userRole === "superAdmin" && (
           <SideBarLink
             name="Dashboard"
             path="/dashboard"
@@ -108,7 +108,7 @@ function SideBar({ setIsOpen }: SideBarSmallProps) {
             icon={
               <HiOutlineChartBarSquare
                 fontSize={24}
-                className="text-gray-200 duration-150 group-hover:text-white"
+                className="text-slate-700 duration-150 group-hover:text-white dark:text-gray-300"
               />
             }
           />

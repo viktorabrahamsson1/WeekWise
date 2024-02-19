@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from "react-query";
 import { useForm } from "react-hook-form";
-import * as apiClient from "../api-client";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 
+import * as apiClient from "../api-client";
 import toast from "react-hot-toast";
 import Header from "../components/header/Header";
 import Footer from "../components/Footer";
@@ -38,7 +38,7 @@ function Login() {
   });
 
   return (
-    <div className="flex min-h-screen flex-col duration-150 dark:bg-slate-900 ">
+    <div className="flex min-h-screen flex-col bg-violet-50 duration-150 dark:bg-slate-900 ">
       <Header />
       <form
         onSubmit={onSubmit}
@@ -83,7 +83,7 @@ function Login() {
           </Link>
           <button
             type="submit"
-            className="ml-auto rounded-sm bg-blue-600 px-2 py-1 text-white duration-150 hover:bg-blue-700 hover:text-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-800 "
+            className="ml-auto rounded-sm bg-indigo-400 px-2 py-1 text-white duration-150 hover:bg-indigo-500 hover:text-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-800 "
           >
             Log in
           </button>

@@ -7,7 +7,6 @@ export type UserType = {
   lastName: string;
   email: string;
   password: string;
-  profilePicture: string;
   role: string;
   isVerified: boolean;
   verificationToken: string;
@@ -24,9 +23,8 @@ const userSchema = new mongoose.Schema({
     default: "user",
     enum: ["user", "admin", "superAdmin"],
   },
-  profilePicture: { type: String, default: "defaultUser.png" },
   isVerified: { type: Boolean, required: true, default: false },
-  verificationToken: { type: String, required: true },
+  verificationToken: { type: String },
 });
 
 userSchema.pre("save", async function (next) {

@@ -19,11 +19,10 @@ app.use(
     credentials: true,
   })
 );
-
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 
-const PORT = 8000;
+const PORT = 9000;
 app.listen(PORT, () => {
   console.log(`Server running on localhost:${PORT}`);
 });

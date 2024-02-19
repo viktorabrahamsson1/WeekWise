@@ -9,8 +9,8 @@ export const useSignOut = () => {
 
   const mutation = useMutation(apiClient.signOut, {
     onSuccess: async () => {
-      toast.success("Logged out");
       await queryClient.invalidateQueries("validateToken");
+      toast.success("Logged out");
       navigate("/login");
     },
     onError: () => {

@@ -24,10 +24,10 @@ function SideBarLink({
         setIsOpen(false);
         handleSetActiveLink(path);
       }}
-      className={`${activeLink === path && "bg-blue-800 dark:bg-slate-900"} group flex items-center gap-4 rounded-md px-4 py-2 duration-150  hover:bg-blue-800 dark:hover:bg-slate-900 `}
+      className={`${activeLink === path && "bg-indigo-300 dark:bg-slate-900"} group flex items-center gap-4 rounded-md px-4 py-2 duration-150  hover:bg-indigo-300 dark:hover:bg-slate-900 `}
     >
       {icon}
-      <span className="text-lg font-semibold text-gray-300 duration-150 group-hover:text-white">
+      <span className="text-lg font-semibold text-slate-600 duration-150 group-hover:text-white dark:text-gray-300">
         {name}
       </span>
     </Link>

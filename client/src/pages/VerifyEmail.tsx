@@ -1,13 +1,13 @@
 import { useEffect } from "react";
-import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router";
+
+import toast from "react-hot-toast";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 function VerifyEmail() {
   const { token } = useParams();
   const navigate = useNavigate();
-  console.log(token);
 
   useEffect(() => {
     const verifyUserEmail = async () => {

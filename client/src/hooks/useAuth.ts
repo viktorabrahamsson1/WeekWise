@@ -7,7 +7,7 @@ const useAuthData = () => {
     isLoading,
     data: userInfo,
   } = useQuery({
-    queryFn: apiClient.verifyToken,
+    queryFn: apiClient.verifyAuthToken,
     queryKey: "validateToken",
     retry: false,
     refetchOnWindowFocus: false,

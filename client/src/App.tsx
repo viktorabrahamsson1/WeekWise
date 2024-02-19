@@ -5,7 +5,7 @@ import Register from "./pages/Register";
 import Layout from "./layout/Layout";
 import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
-import HomePage from "./pages/HomePage";
+import HomePage from "./routes/HomePage";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import AdminRoute from "./utils/AdminRoute";
 import ChangeUserInfo from "./routes/ChangeUserInfo";

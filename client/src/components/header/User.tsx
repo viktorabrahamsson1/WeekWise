@@ -17,35 +17,35 @@ function User() {
   return (
     <div className="flex items-center gap-6 md:ml-auto">
       <div className="flex items-center gap-2">
-        <img src="/defaultUser.png" className="w-10" />
-        <span className="font-semibold text-gray-300">
-          {userInfo?.firstName}
+        <img src="/defaultUser.png" className="w-10 drop-shadow-sm" />
+        <span className="font-semibold text-slate-700 dark:text-gray-300">
+          {userInfo.firstName}
         </span>
       </div>
       <div className="flex items-center gap-3">
         <Link to="/user">
           <HiOutlineUser
             fontSize={26}
-            className="cursor-pointer text-gray-300 duration-150 hover:text-white"
+            className="cursor-pointer text-slate-700 duration-150 hover:text-slate-900 dark:text-gray-300 dark:hover:text-gray-100"
           />
         </Link>
         {isDark ? (
           <HiOutlineSun
             onClick={() => toggleDarkMode()}
             fontSize={26}
-            className="cursor-pointer text-gray-300 duration-150 hover:text-white"
+            className="cursor-pointer text-slate-700 duration-150 hover:text-slate-900 dark:text-gray-300 dark:hover:text-gray-100"
           />
         ) : (
           <HiOutlineMoon
             onClick={() => toggleDarkMode()}
             fontSize={26}
-            className="cursor-pointer text-gray-300 duration-150 hover:text-white"
+            className="cursor-pointer text-slate-700 duration-150 hover:text-slate-900 dark:text-gray-300 dark:hover:text-gray-100"
           />
         )}
         <HiArrowRightOnRectangle
           onClick={handleClick}
           fontSize={26}
-          className="cursor-pointer text-gray-300 duration-150 hover:text-white"
+          className="cursor-pointer text-slate-700 duration-150 hover:text-slate-900 dark:text-gray-300 dark:hover:text-gray-100"
         />
       </div>
     </div>

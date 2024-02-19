@@ -1,10 +1,11 @@
-import express, { Request, Response } from "express";
 import User from "../models/user";
-import { check, validationResult } from "express-validator";
-import createAuthToken from "../utils/authToken";
+import createAuthToken from "../utils/CreateAuthToken";
 import crypto from "crypto";
-import { sendVerificationEmail } from "../utils/sendVerificationEmail ";
 import verifyToken from "../middleware/verifyAuthToken";
+
+import express, { Request, Response } from "express";
+import { check, validationResult } from "express-validator";
+import { sendVerificationEmail } from "../utils/sendVerificationEmail ";
 
 const router = express.Router();
 
@@ -41,8 +42,6 @@ router.post(
 
       sendVerificationEmail(req.body.email, verificationToken);
 
-      createAuthToken(req, res, user);
-
       return res.status(200).json({ message: "Account created" });
     } catch (error) {
       console.log(error);
@@ -59,7 +58,6 @@ router.get("/register/verify/:token", async (req: Request, res: Response) => {
     if (!user) {
       return res.status(400).json({ message: "Invalid Token" });
     }
-    console.log(user);
     user.isVerified = true;
     user.verificationToken = "";
     await User.updateOne(
@@ -74,5 +72,42 @@ router.get("/register/verify/:token", async (req: Request, res: Response) => {
     res.status(500).json({ message: "Error validating email" });
   }
 });
+
+router.post(
+  "/updateUserInfo",
+  verifyToken,
+  async (req: Request, res: Response) => {
+    const { firstName, lastName, email, password } = req.body;
+    try {
+      const user = await User.findOne({ email: req.email });
+      const potentialUser = await User.findOne({ email });
+      if (user !== null) {
+        if (
+          potentialUser &&
+          potentialUser._id.toString() !== user._id.toString()
+        ) {
+          return res.status(400).json({ message: "email in use" });
+        }
+        user.firstName = firstName;
+        user.lastName = lastName;
+        user.email = email;
+
+        if (password && password.trim() !== "") {
+          user.password = password;
+        }
+        await user.save();
+
+        res.cookie("auth_token", "", {
+          expires: new Date(0),
+        });
+
+        createAuthToken(req, res, user);
+        res.status(200).json({ message: "User info updated successfully" });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
 
 export default router;

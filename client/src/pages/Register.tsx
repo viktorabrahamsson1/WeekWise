@@ -12,7 +12,6 @@ export type RegisterFormData = {
   email: string;
   password: string;
   confirmPassword: string;
-  profilePicture?: string; //! Fix
 };
 
 function Register() {
@@ -23,11 +22,7 @@ function Register() {
     handleSubmit,
     getValues,
     formState: { errors },
-  } = useForm<RegisterFormData>({
-    defaultValues: {
-      profilePicture: "defaultUser.png",
-    },
-  });
+  } = useForm<RegisterFormData>();
 
   const mutation = useMutation(apiClient.register, {
     onSuccess: async () => {
@@ -45,11 +40,11 @@ function Register() {
   });
 
   return (
-    <div className="flex min-h-screen flex-col dark:bg-slate-900 ">
+    <div className="flex min-h-screen flex-col bg-indigo-50 dark:bg-slate-900">
       <Header />
       <form
         onSubmit={onSubmit}
-        className="container mx-auto flex max-w-6xl flex-col gap-6 px-4 py-12 "
+        className="container mx-auto flex max-w-6xl flex-col gap-6  px-4 py-12 "
       >
         <div className="flex flex-col gap-6  sm:flex-row">
           <label className="flex flex-1 flex-col gap-1 font-bold text-gray-700 dark:text-gray-300">
@@ -130,10 +125,6 @@ function Register() {
             </span>
           )}
         </label>
-        <label className="flex flex-col gap-2 font-bold text-gray-700 dark:text-gray-300">
-          Profile Picture
-          <input type="file" {...register("profilePicture")} />
-        </label>
 
         <span className="flex">
           <Link
@@ -144,7 +135,7 @@ function Register() {
           </Link>
           <button
             type="submit"
-            className="ml-auto rounded-sm bg-blue-600 px-2 py-1 text-white duration-150 hover:bg-blue-700 hover:text-gray-100 dark:bg-slate-700 dark:text-gray-300 dark:hover:bg-slate-800"
+            className="ml-auto rounded-sm bg-indigo-400 px-2 py-1 text-white duration-150 hover:bg-indigo-500 hover:text-gray-100 dark:bg-slate-700 dark:text-gray-300 dark:hover:bg-slate-800"
           >
             Create Account
           </button>

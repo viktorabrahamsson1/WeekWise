@@ -4,7 +4,7 @@ import { check, validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
 import User from "../models/user";
 import verifyToken from "../middleware/verifyAuthToken";
-import createAuthToken from "../utils/authToken";
+import createAuthToken from "../utils/CreateAuthToken";
 
 const router = express.Router();
 
@@ -43,7 +43,7 @@ router.post(
 
       createAuthToken(req, res, user);
 
-      res.status(200).json({ userId: user.id });
+      res.status(200).json({ message: "Successfully logged in" });
     } catch (error) {
       return res.json(500).json({ message: "Something went wrong" });
     }

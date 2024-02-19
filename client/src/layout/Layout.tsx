@@ -16,7 +16,7 @@ function Layout() {
       <SideBar setIsOpen={setIsOpen} />
       <SideBarSmall isOpen={isOpen} setIsOpen={setIsOpen} />
       <MainHeader setIsOpen={setIsOpen} />
-      <main className="flex-1 px-6 py-16 duration-150 dark:bg-gray-900 dark:text-gray-200 sm:px-8 md:px-12 ">
+      <main className="flex-1 bg-indigo-50 px-6 py-16 text-slate-600 duration-150 dark:bg-gray-900 dark:text-gray-200 sm:px-8 md:px-12 ">
         <Outlet />
       </main>
     </div>

@@ -38,20 +38,6 @@ export const signIn = async (formData: SignInFormData) => {
   }
 };
 
-export const verifyToken = async () => {
-  const response = await fetch(`${API_BASE_URL}/api/auth/validate-token`, {
-    credentials: "include",
-  });
-
-  const body = await response.json();
-
-  if (!response.ok) {
-    throw new Error("invalide Token");
-  }
-
-  return body;
-};
-
 export const signOut = async () => {
   const response = await fetch(`${API_BASE_URL}/api/auth/logout`, {
     method: "POST",
@@ -64,8 +50,8 @@ export const signOut = async () => {
 };
 
 export const editUserInfo = async (formData: ChangeFormData) => {
-  const response = await fetch(`${API_BASE_URL}/api/auth/editUserInfo`, {
-    method: "PATCH",
+  const response = await fetch(`${API_BASE_URL}/api/users/updateUserInfo`, {
+    method: "POST",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
@@ -73,7 +59,25 @@ export const editUserInfo = async (formData: ChangeFormData) => {
     body: JSON.stringify(formData),
   });
 
+  const body = await response.json();
+
   if (!response.ok) {
-    throw new Error("Problem signing out");
+    throw new Error("Problem chaning userInfo");
   }
+
+  return body;
+};
+
+export const verifyAuthToken = async () => {
+  const response = await fetch(`${API_BASE_URL}/api/auth/validate-token`, {
+    credentials: "include",
+  });
+
+  const body = await response.json();
+
+  if (!response.ok) {
+    throw new Error("invalide Token");
+  }
+
+  return body;
 };
