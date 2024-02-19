@@ -5,7 +5,7 @@ import { SignInFormData } from "./pages/Login";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const register = async (formData: RegisterFormData) => {
-  const response = await fetch(`${API_BASE_URL}/api/users/register`, {
+  const response = await fetch(`${API_BASE_URL}/api/createUser/register`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -50,7 +50,7 @@ export const signOut = async () => {
 };
 
 export const editUserInfo = async (formData: ChangeFormData) => {
-  const response = await fetch(`${API_BASE_URL}/api/users/updateUserInfo`, {
+  const response = await fetch(`${API_BASE_URL}/api/user/updateUserInfo`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -64,6 +64,16 @@ export const editUserInfo = async (formData: ChangeFormData) => {
   if (!response.ok) {
     throw new Error("Problem chaning userInfo");
   }
+
+  return body;
+};
+
+export const getUsers = async () => {
+  const response = await fetch(`${API_BASE_URL}/api/admin/getUsers`);
+
+  const body = await response.json();
+
+  if (!response.ok) throw new Error("Problem getting users");
 
   return body;
 };

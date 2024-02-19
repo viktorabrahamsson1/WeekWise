@@ -13,7 +13,7 @@ function VerifyEmail() {
     const verifyUserEmail = async () => {
       try {
         const response = await fetch(
-          `${API_BASE_URL}/api/users/register/verify/${token}`,
+          `${API_BASE_URL}/api/createUser/register/verify/${token}`,
           { method: "GET" },
         );
 

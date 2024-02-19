@@ -68,8 +68,4 @@ router.post("/logout", (req: Request, res: Response) => {
   res.send({});
 });
 
-router.patch("/editUserInfo", async (req: Request, res: Response) => {
-  return res.send({ message: "hello" });
-});
-
 export default router;

@@ -1,7 +1,5 @@
 import { useAppContext } from "../contexts/AppContext";
 
-//todo On light mode, change color theme to white + something
-
 function HomePage() {
   const {
     userInfo: { firstName },

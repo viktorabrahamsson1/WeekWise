@@ -36,7 +36,6 @@ function ChangeUserInfo() {
   });
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
     mutation.mutate(data);
   });
 
@@ -46,7 +45,7 @@ function ChangeUserInfo() {
       className="flex flex-col gap-4 divide-y-[1px] divide-gray-200 text-gray-600 transition-all duration-150 dark:divide-gray-800 dark:text-gray-300"
     >
       <h2 className="text-2xl font-bold">Account Settings</h2>
-      <div className="flex flex-col  py-2">
+      <div className="flex flex-col py-2">
         <h3 className="text-lg font-bold">Personal info</h3>
         <span className="text-sm text-gray-500 dark:text-gray-400">
           Update your photo and personal details here
