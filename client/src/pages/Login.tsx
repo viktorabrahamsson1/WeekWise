@@ -48,7 +48,7 @@ function Login() {
           Email
           <input
             type="email"
-            className="rounded-full border px-4 py-1 font-normal dark:border-none dark:bg-gray-700"
+            className="rounded-md border px-4 py-1 font-normal dark:border-none dark:bg-gray-700"
             {...register("email", { required: "This field is required" })}
           />
           {errors.email && (
@@ -59,7 +59,7 @@ function Login() {
           Password
           <input
             type="password"
-            className="rounded-full border px-4 py-1 font-normal dark:border-none dark:bg-gray-700"
+            className="rounded-md border px-4 py-1 font-normal dark:border-none dark:bg-gray-700"
             {...register("password", {
               required: "This field is required",
               minLength: {

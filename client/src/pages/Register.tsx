@@ -50,7 +50,7 @@ function Register() {
           <label className="flex flex-1 flex-col gap-1 font-bold text-gray-700 dark:text-gray-300">
             First Name
             <input
-              className="rounded-full border px-4 py-1 font-normal dark:border-none dark:bg-slate-700"
+              className="rounded-md border px-4 py-1 font-normal dark:border-none dark:bg-slate-700"
               {...register("firstName", { required: "This field is required" })}
             />
             {errors.firstName && (
@@ -62,7 +62,7 @@ function Register() {
           <label className="flex flex-1 flex-col gap-1 font-bold text-gray-700 dark:text-gray-300">
             Last Name
             <input
-              className="rounded-full border px-4 py-1 font-normal dark:border-none dark:bg-slate-700"
+              className="rounded-md border px-4 py-1 font-normal dark:border-none dark:bg-slate-700"
               {...register("lastName", { required: "This field is required" })}
             />
             {errors.lastName && (
@@ -76,7 +76,7 @@ function Register() {
           Email
           <input
             type="email"
-            className="rounded-full border px-4 py-1 font-normal dark:border-none dark:bg-slate-700"
+            className="rounded-md border px-4 py-1 font-normal dark:border-none dark:bg-slate-700"
             {...register("email", { required: "This field is required" })}
           />
           {errors.email && (
@@ -88,7 +88,7 @@ function Register() {
           Password
           <input
             type="password"
-            className="rounded-full border px-4 py-1 font-normal dark:border-none dark:bg-slate-700"
+            className="rounded-md border px-4 py-1 font-normal dark:border-none dark:bg-slate-700"
             {...register("password", {
               required: "This field is required",
               minLength: {
@@ -107,7 +107,7 @@ function Register() {
           Confirm Password
           <input
             type="password"
-            className="rounded-full border px-4 py-1 font-normal dark:border-none dark:bg-slate-700 "
+            className="rounded-md border px-4 py-1 font-normal dark:border-none dark:bg-slate-700 "
             {...register("confirmPassword", {
               required: "This field is required",
               validate: (val) => {

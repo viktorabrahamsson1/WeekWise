@@ -14,4 +14,42 @@ router.get("/getUsers", async (req: Request, res: Response) => {
   return res.status(200).json(allUsers);
 });
 
+router.post("/updateUserInfo", async (req: Request, res: Response) => {
+  const { firstName, lastName, email, password, role, originalEmail } =
+    req.body;
+  try {
+    const user = await User.findOne({ email: originalEmail });
+    const potentialUser = await User.findOne({ email });
+
+    if (user === null) {
+      return res.status(400).json({ message: "No user" });
+    }
+
+    if (potentialUser && potentialUser.id !== user.id) {
+      return res.status(400).json({ message: "Email in use" });
+    }
+
+    user.firstName = firstName;
+    user.lastName = lastName;
+    user.email = email;
+    user.role = role;
+
+    if (password && password.trim() !== "") {
+      user.password = password;
+    }
+
+    await user.save();
+
+    res.status(200).json({ message: "User info successfully changed" });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.post("/deleteUser", async (req: Request, res: Response) => {
+  await User.deleteOne({ email: req.body.email });
+
+  return res.status(200).json({ message: "User deleted" });
+});
+
 export default router;

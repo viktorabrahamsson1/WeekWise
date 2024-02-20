@@ -1,8 +1,11 @@
-import UserHeader from "../../components/adminroutes/UserHeader";
-import UserRow from "../../components/adminroutes/UserRow";
-import * as apiClient from "../../api-client";
 import { useLoaderData } from "react-router";
 import { useState } from "react";
+
+import UserHeader from "../../components/admincomponents/UserHeader";
+import UserRow from "../../components/admincomponents/UserRow";
+import EditUser from "../../components/admincomponents/EditUser";
+import * as apiClient from "../../api-client";
+import DeleteUser from "../../components/admincomponents/DeleteUser";
 
 export type User = {
   id: string;
@@ -16,10 +19,21 @@ export type User = {
 };
 
 function Users() {
-  const users = useLoaderData() as User[];
+  const [editOpen, setEditOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [openOptionsUserId, setOpenOptionsUserId] = useState<string | null>(
     null,
   );
+  const users = useLoaderData() as User[];
+
+  const toggleEdit = () => {
+    setEditOpen((open) => !open);
+  };
+
+  const toggleDelete = () => {
+    setDeleteOpen((open) => !open);
+  };
 
   const toggleOptions = (userId: string) => {
     if (openOptionsUserId === userId) {
@@ -30,7 +44,7 @@ function Users() {
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="relative flex flex-col gap-4">
       <div className="flex items-center justify-between pb-1">
         <h2 className="text-2xl font-semibold">Users</h2>
         <input
@@ -39,16 +53,31 @@ function Users() {
         />
       </div>
       <UserHeader />
-      <div className="flex max-h-[500px] flex-col divide-y-[1px] divide-gray-200  dark:divide-gray-800 ">
+      <div className="flex max-h-[500px] flex-col divide-y-[1px] divide-gray-200 overflow-y-scroll  dark:divide-gray-800 ">
         {users.map((user: User) => (
           <UserRow
             user={user}
             key={user.email}
             isOpen={openOptionsUserId === user.email}
             onToggleOptions={toggleOptions}
+            toggleEdit={toggleEdit}
+            setCurrentUser={setCurrentUser}
+            toggleDelete={toggleDelete}
           />
         ))}
       </div>
+      <EditUser
+        toggleEdit={toggleEdit}
+        editOpen={editOpen}
+        currentUser={currentUser}
+        setCurrentUser={setCurrentUser}
+        setEditOpen={setEditOpen}
+      />
+      <DeleteUser
+        currentUser={currentUser}
+        toggleDelete={toggleDelete}
+        deleteOpen={deleteOpen}
+      />
     </div>
   );
 }
