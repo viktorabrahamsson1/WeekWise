@@ -1,28 +1,18 @@
 import { HiOutlinePencil, HiOutlineTrash } from "react-icons/hi2";
-import { User } from "../../routes/admin routes/Users";
 
 type UsersOptionsProps = {
   isOpen: boolean;
   toggleEdit: () => void;
-  user: User;
-  setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>;
   toggleDelete: () => void;
 };
 
-function UsersOptions({
-  isOpen,
-  toggleEdit,
-  setCurrentUser,
-  user,
-  toggleDelete,
-}: UsersOptionsProps) {
+function UsersOptions({ isOpen, toggleEdit, toggleDelete }: UsersOptionsProps) {
   return (
     <div
       className={`${isOpen ? "flex" : "hidden"} flex-col gap-1 rounded-md bg-indigo-100 px-2 py-1 text-sm text-gray-700   dark:bg-slate-700 dark:text-gray-200`}
     >
       <span
         onClick={() => {
-          setCurrentUser(user);
           toggleEdit();
         }}
         className="group flex cursor-pointer items-center gap-2 "
@@ -34,7 +24,6 @@ function UsersOptions({
       </span>
       <span
         onClick={() => {
-          setCurrentUser(user);
           toggleDelete();
         }}
         className="group flex cursor-pointer items-center gap-2"

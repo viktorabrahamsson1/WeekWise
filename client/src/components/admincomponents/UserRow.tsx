@@ -59,13 +59,14 @@ function UserRow({
         }}
         className="absolute right-0 flex items-center justify-center"
       >
-        <HiOutlineEllipsisVertical className="h-10 w-8 cursor-pointer pr-2 text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-700" />
+        <HiOutlineEllipsisVertical
+          onClick={() => setCurrentUser(user)}
+          className="h-10 w-8 cursor-pointer pr-2 text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-700"
+        />
       </div>
       <div className="absolute right-5 top-9 z-10" ref={optionsRef}>
         <UsersOptions
-          user={user}
           isOpen={isOpen}
-          setCurrentUser={setCurrentUser}
           toggleEdit={toggleEdit}
           toggleDelete={toggleDelete}
         />

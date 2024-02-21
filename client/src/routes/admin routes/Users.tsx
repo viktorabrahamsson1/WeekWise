@@ -1,11 +1,11 @@
-import { useLoaderData } from "react-router";
 import { useState } from "react";
 
 import UserHeader from "../../components/admincomponents/UserHeader";
 import UserRow from "../../components/admincomponents/UserRow";
 import EditUser from "../../components/admincomponents/EditUser";
-import * as apiClient from "../../api-client";
 import DeleteUser from "../../components/admincomponents/DeleteUser";
+import useUsers from "../../hooks/useUsers";
+import Spinner from "../../components/Spinner";
 
 export type User = {
   id: string;
@@ -16,6 +16,7 @@ export type User = {
   role: string;
   isVerified: boolean;
   verificationToken: string;
+  createdAt: string;
 };
 
 function Users() {
@@ -25,7 +26,8 @@ function Users() {
   const [openOptionsUserId, setOpenOptionsUserId] = useState<string | null>(
     null,
   );
-  const users = useLoaderData() as User[];
+
+  const { data: users, isLoading } = useUsers();
 
   const toggleEdit = () => {
     setEditOpen((open) => !open);
@@ -42,6 +44,10 @@ function Users() {
       setOpenOptionsUserId(userId);
     }
   };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <div className="relative flex flex-col gap-4">
@@ -81,10 +87,5 @@ function Users() {
     </div>
   );
 }
-
-export const loader = (): Promise<User> => {
-  const data = apiClient.getUsers();
-  return data;
-};
 
 export default Users;

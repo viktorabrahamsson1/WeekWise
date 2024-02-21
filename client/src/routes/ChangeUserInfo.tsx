@@ -25,6 +25,11 @@ function ChangeUserInfo() {
 
   const mutation = useMutation(apiClient.editUserInfo, {
     onSuccess: (data) => {
+      if (data.newEmail) {
+        toast.success("Please verify your new email");
+        queryClient.invalidateQueries("validateToken");
+        return;
+      }
       toast.success(`${data.message}`);
       queryClient.invalidateQueries("validateToken");
       resetField("password");

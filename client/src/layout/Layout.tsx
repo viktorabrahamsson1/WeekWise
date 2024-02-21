@@ -12,11 +12,11 @@ function Layout() {
   if (isLoading) return null;
 
   return (
-    <div className="flex min-h-screen flex-col lg:grid lg:grid-cols-[16rem_1fr] lg:grid-rows-[auto_1fr] ">
+    <div className="flex h-screen flex-col lg:grid lg:grid-cols-[16rem_1fr] lg:grid-rows-[auto_1fr] ">
       <SideBar setIsOpen={setIsOpen} />
       <SideBarSmall isOpen={isOpen} setIsOpen={setIsOpen} />
       <MainHeader setIsOpen={setIsOpen} />
-      <main className="flex-1 bg-indigo-50 px-6 py-16 text-slate-600 duration-150 dark:bg-gray-900 dark:text-gray-200 sm:px-8 md:px-24 ">
+      <main className="flex-1 overflow-scroll overflow-x-hidden bg-indigo-50 px-6 py-16 text-slate-700 duration-150 dark:bg-gray-900 dark:text-gray-200 sm:px-8 md:px-24 ">
         <Outlet />
       </main>
     </div>

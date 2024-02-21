@@ -110,6 +110,25 @@ export const adminDeleteUser = async (user: User) => {
   if (!response.ok) throw new Error("Problem deleting user");
 };
 
+export const adminGetUsersToday = async (date: string): Promise<User[]> => {
+  const response = await fetch(
+    `${API_BASE_URL}/api/admin/getUserToday/${date}`,
+    {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+  );
+
+  const body = await response.json();
+
+  if (!response.ok) throw new Error("Problem getting users");
+
+  return body;
+};
+
 export const verifyAuthToken = async () => {
   const response = await fetch(`${API_BASE_URL}/api/auth/validate-token`, {
     credentials: "include",

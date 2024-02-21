@@ -2,11 +2,12 @@ import { HiXMark } from "react-icons/hi2";
 import { User } from "../../routes/admin routes/Users";
 import { useForm } from "react-hook-form";
 import { ChangeFormData } from "../../routes/ChangeUserInfo";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 import toast from "react-hot-toast";
 import * as apiClient from "../../api-client";
 import { useAppContext } from "../../contexts/AppContext";
+import { useEffect } from "react";
 
 type EditUserProps = {
   editOpen: boolean;
@@ -33,18 +34,30 @@ function EditUser({
   setEditOpen,
 }: EditUserProps) {
   const { userInfo } = useAppContext();
+  const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
     resetField,
     getValues,
+    setValue,
     formState: { errors },
   } = useForm<adminChangeFormData>();
+
+  useEffect(() => {
+    if (user) {
+      setValue("firstName", user.firstName);
+      setValue("lastName", user.lastName);
+      setValue("email", user.email);
+      setValue("role", user.role);
+    }
+  }, [user, setValue]);
 
   const mutation = useMutation(apiClient.adminEditUserInfo, {
     onSuccess: () => {
       resetField("password");
       resetField("confirmPassword");
+      queryClient.invalidateQueries("users");
       setEditOpen(false);
       toast.success("Successfully changed info");
     },
@@ -56,6 +69,7 @@ function EditUser({
   const onSubmit = handleSubmit((data) => {
     const newData = { ...data, originalEmail: user?.email };
     mutation.mutate(newData);
+    setCurrentUser(null);
   });
 
   if (user === null) return;
@@ -73,7 +87,10 @@ function EditUser({
       <header className="flex items-center justify-between pb-6">
         <h2 className="text-2xl font-semibold">Edit User</h2>
         <HiXMark
-          onClick={toggleEdit}
+          onClick={() => {
+            setCurrentUser(null);
+            toggleEdit();
+          }}
           className="h-8 w-7 cursor-pointer hover:text-gray-900 dark:hover:text-gray-600"
         />
       </header>

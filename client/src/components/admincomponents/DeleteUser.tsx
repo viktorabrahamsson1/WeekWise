@@ -3,6 +3,7 @@ import { User } from "../../routes/admin routes/Users";
 
 import * as apiClient from "../../api-client";
 import toast from "react-hot-toast";
+import { useMutation, useQueryClient } from "react-query";
 
 type DeleteUserProps = {
   currentUser: User | null;
@@ -15,10 +16,20 @@ function DeleteUser({
   toggleDelete,
   currentUser,
 }: DeleteUserProps) {
+  const queryClient = useQueryClient();
+  const mutation = useMutation(apiClient.adminDeleteUser, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("users");
+      toggleDelete();
+      toast.success("User deleted");
+    },
+    onError: () => {
+      toast.error("Problem deleting user");
+    },
+  });
+
   const deleteUser = (user: User) => {
-    apiClient.adminDeleteUser(user);
-    toggleDelete();
-    toast.success("User deleted");
+    mutation.mutate(user);
   };
 
   if (currentUser === null) return;
@@ -39,7 +50,7 @@ function DeleteUser({
           </button>
           <button
             onClick={() => deleteUser(currentUser)}
-            className="rounded-md bg-red-400  px-4 py-1 dark:hover:bg-red-500"
+            className="text-nowrap rounded-md  bg-red-400 px-4 py-1 dark:hover:bg-red-500"
           >
             Yes, delete
           </button>

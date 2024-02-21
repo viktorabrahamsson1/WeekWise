@@ -1,21 +1,16 @@
+import DashboardCircle from "../../components/admincomponents/DashboardCircle";
+import DashboardGraph from "../../components/admincomponents/DashboardGraph";
+import DashboardToday from "../../components/admincomponents/DashboardToday";
+
 function Dashboard() {
   return (
     <div className="flex flex-col gap-6">
       <h2 className="text-2xl font-bold">Dashboard</h2>
-      <div className="flex items-center gap-8">
-        <div className="flex flex-1 flex-col gap-2 p-6 dark:bg-slate-800">
-          <h3 className="text-xl font-semibold">Today</h3>
-          <div className="flex flex-col divide-y-[1px] divide-gray-600">
-            <p>1</p>
-            <p>1</p>
-            <p>1</p>
-            <p>1</p>
-          </div>
-        </div>
-        <div className="flex flex-1 flex-col gap-2 p-6 dark:bg-slate-800">
-          <h3 className="text-xl font-semibold">Today</h3>
-        </div>
+      <div className="flex flex-col items-center gap-6 md:flex-row">
+        <DashboardToday />
+        <DashboardCircle />
       </div>
+      <DashboardGraph />
     </div>
   );
 }

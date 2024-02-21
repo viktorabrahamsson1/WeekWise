@@ -75,12 +75,20 @@ function Login() {
           )}
         </label>
         <div className="flex items-center justify-between">
-          <Link
-            to="/register"
-            className="text-gray-700 underline duration-150 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-400"
-          >
-            Dont have an account?
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link
+              to="/register"
+              className="text-gray-700 underline duration-150 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-400"
+            >
+              Dont have an account?
+            </Link>
+            <Link
+              to="/login"
+              className="self-start underline dark:text-gray-300"
+            >
+              Forgot your password?
+            </Link>
+          </div>
           <button
             type="submit"
             className="ml-auto rounded-sm bg-indigo-400 px-2 py-1 text-white duration-150 hover:bg-indigo-500 hover:text-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-800 "
