@@ -7,7 +7,7 @@ export const sendVerificationEmail = (email: string, token: string) => {
     from: "Viktor Abrahamsson at WeekWise.se",
     to: email,
     subject: "Verify Email",
-    html: `<div>Hi 👋, Please click on this link <a href="${frontEndUrl}/register/${token}">${frontEndUrl}</a> to verify your email \n 
+    html: `<div>Hi 👋, Please click on this link <a href="${frontEndUrl}/register/${token}">${frontEndUrl}</a> to verify your email. \n 
     <span>Please check your spam folder if the email does not appear.</span> </div>`,
   };
 
@@ -30,7 +30,7 @@ export const sendVerificationPassword = (
     from: "Viktor Abrahamsson at WeekWise.se",
     to: email,
     subject: "Verify Password change",
-    html: `<div>Hi 👋, Please click on this link <a href="${frontEndUrl}/forgotPassword/${passwordToken}">${frontEndUrl}</a> to verify your password change \n 
+    html: `<div>Hi 👋, Please click on this link <a href="${frontEndUrl}/forgotPassword/${passwordToken}">${frontEndUrl}</a> to verify your password change. \n 
     <span>Please check your spam folder if the email does not appear.</span> </div>`,
   };
 

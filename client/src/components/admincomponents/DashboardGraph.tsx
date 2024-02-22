@@ -46,7 +46,6 @@ function DashboardGraph() {
       users: filter(i),
     };
   });
-  console.log(data);
 
   return (
     <div className="flex flex-1 flex-col gap-6 rounded-md bg-indigo-200 p-5 dark:bg-slate-800">
