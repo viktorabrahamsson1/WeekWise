@@ -10,6 +10,7 @@ export type UserType = {
   role: string;
   isVerified: boolean;
   verificationToken: string;
+  createdAt: string;
 };
 
 const userSchema = new mongoose.Schema({
@@ -25,6 +26,7 @@ const userSchema = new mongoose.Schema({
   },
   isVerified: { type: Boolean, required: true, default: false },
   verificationToken: { type: String },
+  createdAt: { type: String, required: true },
 });
 
 userSchema.pre("save", async function (next) {

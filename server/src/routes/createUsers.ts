@@ -33,9 +33,15 @@ router.post(
         });
       }
 
+      const date = new Date().toISOString().split("T")[0];
       const verificationToken = crypto.randomBytes(20).toString("hex");
 
-      user = new User({ ...req.body, isVerified: false, verificationToken });
+      user = new User({
+        ...req.body,
+        isVerified: false,
+        verificationToken,
+        createdAt: date,
+      });
       await user.save();
 
       sendVerificationEmail(req.body.email, verificationToken);

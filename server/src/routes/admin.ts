@@ -52,4 +52,16 @@ router.post("/deleteUser", async (req: Request, res: Response) => {
   return res.status(200).json({ message: "User deleted" });
 });
 
+router.get("/getUserToday/:date", async (req: Request, res: Response) => {
+  const { date } = req.params;
+  const filter = { createdAt: date };
+  const users = await User.find(filter);
+
+  if (!users) {
+    return res.status(200).json({ message: "No accounts created today" });
+  }
+
+  return res.status(200).json(users);
+});
+
 export default router;
