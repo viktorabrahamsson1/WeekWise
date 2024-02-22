@@ -3,6 +3,7 @@ import { ChangeFormData } from "./routes/ChangeUserInfo";
 import { SignInFormData } from "./pages/Login";
 import { AdminChangeFormDataExtra } from "./components/admincomponents/EditUser";
 import { User } from "./routes/admin routes/Users";
+import { ForgotPasswordData } from "./pages/ForgotPassword";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -78,6 +79,18 @@ export const getUsers = async () => {
   if (!response.ok) throw new Error("Problem getting users");
 
   return body;
+};
+
+export const forgotPassword = async (formData: ForgotPasswordData) => {
+  const response = await fetch(`${API_BASE_URL}/api/user/forgotPassword`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  });
+
+  if (!response.ok) throw new Error("Problem changing password");
 };
 
 export const adminEditUserInfo = async (formData: AdminChangeFormDataExtra) => {

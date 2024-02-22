@@ -15,6 +15,8 @@ import Calender from "./routes/Calender";
 import Send from "./routes/Send";
 import Retrived from "./routes/Retrived";
 import VerifyEmail from "./pages/VerifyEmail";
+import ForgotPassword from "./pages/ForgotPassword";
+import VerifyPassword from "./pages/VerifyPassword";
 
 const router = createBrowserRouter([
   {
@@ -85,6 +87,14 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/forgotPassword",
+    element: <ForgotPassword />,
+  },
+  {
+    path: "/forgotPassword/:passwordToken",
+    element: <VerifyPassword />,
   },
   {
     path: "/register/:token",
