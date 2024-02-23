@@ -70,7 +70,7 @@ function ChangeUserInfo() {
                   message: "at least 2 characters",
                 },
               })}
-              className="rounded-md border px-3 py-1 duration-150 dark:bg-slate-700 dark:placeholder:text-gray-200"
+              className="rounded-md border border-gray-400 px-3 py-1 duration-150 dark:bg-slate-700 dark:placeholder:text-gray-200"
             />
             {errors.firstName && (
               <span className="text-sm text-red-300">
@@ -88,7 +88,7 @@ function ChangeUserInfo() {
                   message: "at least 2 characters",
                 },
               })}
-              className=" rounded-md border px-3 py-1 duration-150 dark:bg-slate-700 dark:placeholder:text-gray-200"
+              className=" rounded-md border border-gray-400 px-3 py-1 duration-150 dark:bg-slate-700 dark:placeholder:text-gray-200"
             />
             {errors.lastName && (
               <span className="text-sm text-red-300">
@@ -115,7 +115,7 @@ function ChangeUserInfo() {
                 message: "To many characters",
               },
             })}
-            className="flex-auto rounded-md border px-3 py-1 duration-150 dark:bg-slate-700 dark:placeholder:text-gray-200"
+            className="flex-auto rounded-md border border-gray-400 px-3 py-1 duration-150 dark:bg-slate-700 dark:placeholder:text-gray-200"
           />
           {errors.email && (
             <span className="text-sm text-red-300">{errors.email.message}</span>
@@ -134,7 +134,7 @@ function ChangeUserInfo() {
                 message: "at lesat 6 characters",
               },
             })}
-            className="rounded-md border px-3 py-1 duration-150 dark:bg-slate-700 dark:placeholder:text-gray-200"
+            className="rounded-md border border-gray-400 px-3 py-1 duration-150 dark:bg-slate-700 dark:placeholder:text-gray-200"
           />
           {errors.password && (
             <span className=" text-sm text-red-400">
@@ -153,7 +153,7 @@ function ChangeUserInfo() {
                 return val === getValues().password || "Wrong Credentials";
               },
             })}
-            className="rounded-md border px-3 py-1 duration-150 focus:outline-1 focus:outline-offset-1 dark:bg-slate-700 dark:placeholder:text-gray-200"
+            className="rounded-md border border-gray-400 px-3 py-1 duration-150 focus:outline-1 focus:outline-offset-1 dark:bg-slate-700 dark:placeholder:text-gray-200"
           />
           {errors.confirmPassword && (
             <span className=" text-sm text-red-400">

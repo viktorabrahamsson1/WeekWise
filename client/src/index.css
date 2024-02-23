@@ -2,22 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-::-webkit-scrollbar {
-  background-color: #7775;
-  width: 12px;
-  border-radius: 1px;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #9999;
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background-color: #838383;
-}
-
 html,
 body {
   height: 100%;
   overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar:horizontal {
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply rounded-xl bg-slate-500;
+}
+
+.task > ::webkit-scrollbar-thumb {
+  @apply rounded-xl bg-indigo-800;
 }

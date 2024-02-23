@@ -4,10 +4,14 @@ import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import "dotenv/config";
 
+import "./models";
+
 import registerUserRoutes from "./routes/createUsers";
 import authRoutes from "./routes/auth";
 import userRoutes from "./routes/user";
 import adminRoutes from "./routes/admin";
+import columnRoutes from "./routes/column";
+import taskRoutes from "./routes/task";
 
 mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string);
 
@@ -21,10 +25,13 @@ app.use(
     credentials: true,
   })
 );
+
 app.use("/api/auth", authRoutes);
 app.use("/api/createUser", registerUserRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/column", columnRoutes);
+app.use("/api/task", taskRoutes);
 
 const PORT = 9000;
 app.listen(PORT, () => {

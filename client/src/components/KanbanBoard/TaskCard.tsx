@@ -46,7 +46,7 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
       <div
         ref={setNodeRef}
         style={style}
-        className="relative flex h-[100px] min-h-[100px] cursor-grab items-center rounded-md border-2 border-rose-500 bg-slate-700 p-2.5 text-left opacity-50 "
+        className="relative flex h-[100px] min-h-[100px] cursor-grab items-center rounded-md border-2 border-indigo-300 bg-indigo-200 p-2.5 text-left opacity-50 dark:bg-slate-700 "
       />
     );
   }
@@ -58,7 +58,7 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
         style={style}
         {...attributes}
         {...listeners}
-        className="relative flex h-[100px] min-h-[100px] cursor-grab items-center rounded-md bg-slate-700 p-2.5 text-left hover:ring-2 hover:ring-inset hover:ring-rose-500"
+        className=" relative flex h-[100px] min-h-[100px] cursor-grab items-center rounded-md p-2.5 text-left  hover:ring-2 hover:ring-inset hover:ring-indigo-400 dark:bg-slate-700 dark:hover:ring-slate-900"
       >
         <textarea
           value={task.content}
@@ -71,7 +71,7 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
             }
           }}
           onChange={(e) => updateTask(task.id, e.target.value)}
-          className="h-[90%] w-full resize-none rounded border-none bg-transparent text-gray-200 focus:outline-none"
+          className="h-[90%] w-full resize-none rounded border-none bg-transparent text-gray-700 focus:outline-none dark:text-gray-200"
         ></textarea>
       </div>
     );
@@ -90,9 +90,9 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
       onMouseLeave={() => {
         setMouseIsOver(false);
       }}
-      className="relative flex h-[100px] min-h-[100px] cursor-grab items-center rounded-md bg-slate-700 p-2.5 text-left hover:ring-2 hover:ring-inset hover:ring-rose-500"
+      className="relative flex h-[100px] min-h-[100px] cursor-grab items-center rounded-md bg-indigo-300 p-2.5 text-left hover:ring-2 hover:ring-inset hover:ring-indigo-400 dark:bg-slate-700 dark:hover:ring-indigo-300"
     >
-      <p className="my-auto h-[90%] overflow-y-auto overflow-x-hidden whitespace-pre-wrap ">
+      <p className="my-auto h-[90%] w-full overflow-y-auto overflow-x-hidden whitespace-pre-wrap ">
         {task.content}
       </p>
       {mouseIsOver && (

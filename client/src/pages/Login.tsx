@@ -48,7 +48,7 @@ function Login() {
           Email
           <input
             type="email"
-            className="rounded-md border px-4 py-1 font-normal dark:border-none dark:bg-gray-700"
+            className="rounded-md border border-gray-400 px-4 py-1 font-normal dark:border-none dark:bg-gray-700"
             {...register("email", { required: "This field is required" })}
           />
           {errors.email && (
@@ -59,7 +59,7 @@ function Login() {
           Password
           <input
             type="password"
-            className="rounded-md border px-4 py-1 font-normal dark:border-none dark:bg-gray-700"
+            className="rounded-md border border-gray-400 px-4 py-1 font-normal dark:border-none dark:bg-gray-700"
             {...register("password", {
               required: "This field is required",
               minLength: {
@@ -75,7 +75,7 @@ function Login() {
           )}
         </label>
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <Link
               to="/register"
               className="text-gray-700 underline duration-150 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-400"
@@ -91,7 +91,7 @@ function Login() {
           </div>
           <button
             type="submit"
-            className="ml-auto rounded-sm bg-indigo-400 px-2 py-1 text-white duration-150 hover:bg-indigo-500 hover:text-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-800 "
+            className="ml-auto text-nowrap rounded-sm bg-indigo-400 px-2 py-1 text-white duration-150 hover:bg-indigo-500 hover:text-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-800 "
           >
             Log in
           </button>

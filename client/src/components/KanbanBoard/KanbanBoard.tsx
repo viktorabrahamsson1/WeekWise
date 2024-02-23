@@ -14,11 +14,15 @@ import PlusIcon from "../icons/PlusIcon";
 import ColumnContainer from "./ColumnContainer";
 import { createPortal } from "react-dom";
 import TaskCard from "./TaskCard";
+import * as apiClient from "../../api-client";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import toast from "react-hot-toast";
+import Spinner from "../Spinner";
 
 export type Id = string | number;
 
 export type Column = {
-  id: Id;
+  _id: Id;
   title: string;
 };
 
@@ -33,8 +37,35 @@ function KanbanBoard() {
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [activeTask, setActiveTask] = useState<Task | null>(null);
+  const queryClient = useQueryClient();
 
-  const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
+  const { isLoading } = useQuery({
+    queryFn: apiClient.getColumns,
+    queryKey: "columns",
+    onSuccess: (data) => {
+      setColumns(data);
+    },
+  });
+
+  const { mutate: createColumn } = useMutation(apiClient.createColumn, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("columns");
+    },
+    onError: () => {
+      toast.error("Error creating column");
+    },
+  });
+
+  const { mutate: deleteColumn } = useMutation(apiClient.deleteColumn, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("columns");
+    },
+    onError: () => {
+      toast.error("Error deleting column");
+    },
+  });
+
+  const columnsId = useMemo(() => columns.map((col) => col._id), [columns]);
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -43,28 +74,11 @@ function KanbanBoard() {
     }),
   );
 
-  function createNewColumn() {
-    const columnToAdd: Column = {
-      id: genereteId(),
-      title: `Column ${columns.length + 1}`,
-    };
-    setColumns([...columns, columnToAdd]);
-  }
-
-  function deleteColumn(id: Id) {
-    const filteredColumns = columns.filter((col) => col.id !== id);
-    setColumns(filteredColumns);
-
-    const newTasks = tasks.filter((t) => t.columnId !== id);
-    setTasks(newTasks);
-  }
-
   function updateColumn(id: Id, title: string) {
     const newColumns = columns.map((col) => {
-      if (col.id !== id) return col;
+      if (col._id !== id) return col;
       return { ...col, title };
     });
-
     setColumns(newColumns);
   }
 
@@ -92,7 +106,6 @@ function KanbanBoard() {
   }
 
   function onDragStart(event: DragStartEvent) {
-    console.log(event);
     if (event.active.data.current?.type === "Column") {
       setActiveColumn(event.active.data.current.column);
       return;
@@ -117,11 +130,11 @@ function KanbanBoard() {
 
     setColumns((columns) => {
       const activeColumnIndex = columns.findIndex(
-        (col) => col.id === activeColumnId,
+        (col) => col._id === activeColumnId,
       );
 
       const overColumnIndex = columns.findIndex(
-        (col) => col.id === overColumnId,
+        (col) => col._id === overColumnId,
       );
       return arrayMove(columns, activeColumnIndex, overColumnIndex);
     });
@@ -169,6 +182,10 @@ function KanbanBoard() {
     return Math.floor(Math.random() * 10001);
   }
 
+  if (isLoading) {
+    return <Spinner />;
+  }
+
   return (
     <div className="m-auto flex w-full items-center overflow-x-auto overflow-y-hidden px-4 py-2">
       <DndContext
@@ -182,23 +199,26 @@ function KanbanBoard() {
             <SortableContext items={columnsId}>
               {columns.map((col) => (
                 <ColumnContainer
-                  key={col.id}
+                  key={col._id}
                   column={col}
                   deleteColumn={deleteColumn}
-                  updateColumn={updateColumn}
+                  updateColumn={(columnId, title) =>
+                    updateColumn(columnId, title)
+                  }
                   createTask={createTask}
                   updateTask={updateTask}
                   deleteTask={deleteTask}
-                  tasks={tasks.filter((task) => task.columnId === col.id)}
+                  tasks={tasks.filter((task) => task.columnId === col._id)}
                 />
               ))}
             </SortableContext>
           </div>
           <button
             onClick={() => {
-              createNewColumn();
+              const title = `Column ${columns.length + 1}`;
+              createColumn({ title });
             }}
-            className="flex h-[60px] w-[350px] min-w-[350px] cursor-pointer gap-2 rounded-lg border-2 border-slate-700 bg-slate-700 p-4 ring-rose-500 duration-100 hover:ring-2"
+            className="flex h-[60px] w-[350px] min-w-[350px] cursor-pointer gap-2 rounded-lg border-2 border-indigo-300 bg-indigo-200 p-4 ring-indigo-200 duration-100 hover:ring-2 dark:border-slate-700 dark:bg-slate-700"
           >
             <PlusIcon />
             Add Column
@@ -215,7 +235,7 @@ function KanbanBoard() {
                 updateTask={updateTask}
                 deleteTask={deleteTask}
                 tasks={tasks.filter(
-                  (task) => task.columnId === activeColumn.id,
+                  (task) => task.columnId === activeColumn._id,
                 )}
               />
             )}

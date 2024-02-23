@@ -10,7 +10,7 @@ import TaskCard from "./TaskCard";
 interface Props {
   column: Column;
   deleteColumn: (id: Id) => void;
-  updateColumn: (id: Id, title: string) => void;
+  updateColumn: (columnId: Id, title: string) => void;
   createTask: (columnId: Id) => void;
   deleteTask: (id: Id) => void;
   updateTask: (id: Id, content: string) => void;
@@ -37,7 +37,7 @@ function ColumnContainer({
     transition,
     isDragging,
   } = useSortable({
-    id: column.id,
+    id: column._id,
     data: {
       type: "Column",
       column,
@@ -55,7 +55,7 @@ function ColumnContainer({
       <div
         ref={setNodeRef}
         style={style}
-        className="flex h-[500px] max-h-[500px] w-[350px] flex-col rounded-md border-2 border-rose-500 bg-slate-600 opacity-40 "
+        className="flex h-[500px] max-h-[500px] w-[350px] flex-col rounded-md border-2 border-indigo-300 bg-indigo-100 opacity-40 dark:bg-slate-600 "
       ></div>
     );
   }
@@ -64,7 +64,7 @@ function ColumnContainer({
     <div
       ref={setNodeRef}
       style={style}
-      className="flex h-[500px] max-h-[500px] w-[350px] flex-col rounded-md bg-slate-600"
+      className="flex h-[500px] max-h-[500px] w-[350px] flex-col rounded-md bg-indigo-100 dark:bg-slate-600"
     >
       <div
         {...attributes}
@@ -72,13 +72,13 @@ function ColumnContainer({
         onClick={() => {
           setEditMode(true);
         }}
-        className="flex h-[60px] cursor-grab items-center justify-between rounded-md rounded-b-none border-2 border-slate-600 bg-slate-700 p-3 text-lg font-bold"
+        className="flex h-[60px] cursor-grab items-center justify-between rounded-md rounded-b-none border-2 border-indigo-100 bg-indigo-200 p-3 text-lg font-bold dark:border-slate-600 dark:bg-slate-700"
       >
-        <div className="flex gap-2">
+        <div className="flex gap-2 ">
           {editMode ? (
             <input
               value={column.title}
-              onChange={(e) => updateColumn(column.id, e.target.value)}
+              onChange={(e) => updateColumn(column._id, e.target.value)}
               autoFocus
               onBlur={() => {
                 setEditMode(false);
@@ -87,7 +87,7 @@ function ColumnContainer({
                 if (e.key !== "Enter") return;
                 setEditMode(false);
               }}
-              className="rounded border bg-black px-2 outline-none focus:border-rose-500"
+              className="rounded border  px-2 outline-none  dark:bg-slate-800 dark:focus:border-slate-900"
             />
           ) : (
             column.title
@@ -95,7 +95,7 @@ function ColumnContainer({
         </div>
         <button
           onClick={() => {
-            deleteColumn(column.id);
+            deleteColumn(column._id);
           }}
           className="rounded px-1 py-2"
         >
@@ -116,9 +116,9 @@ function ColumnContainer({
       </div>
       <button
         onClick={() => {
-          createTask(column.id);
+          createTask(column._id);
         }}
-        className="flex items-center border-2 border-slate-800 border-x-slate-800 p-4 hover:bg-slate-700 hover:text-rose-500 active:bg-slate-600"
+        className="flex items-center border-t-2 border-indigo-200 p-4 hover:bg-indigo-200  hover:text-gray-900 active:bg-slate-600 dark:border-slate-800 dark:hover:bg-slate-700 dark:hover:text-indigo-300"
       >
         <PlusIcon />
         <span>Add task</span>
