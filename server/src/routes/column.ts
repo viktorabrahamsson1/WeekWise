@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import Column from "../models/column";
 import verifyToken from "../middleware/verifyAuthToken";
+import User from "../models/user";
 
 const router = express.Router();
 
@@ -50,26 +51,49 @@ router.delete(
   }
 );
 
-router.post("/updateColumn", async (req: Request, res: Response) => {
-  try {
+router.post(
+  "/updateColumn",
+  verifyToken,
+  async (req: Request, res: Response) => {
     const { columnId, title } = req.body;
-    console.log(columnId);
-    console.log(title);
-    const column = await Column.findById(columnId);
+    try {
+      const updatedColumn = await Column.findByIdAndUpdate(
+        columnId,
+        { $set: { title: title } },
+        { new: true }
+      );
 
-    if (!column) {
-      return res.status(401).json({ message: "No column found" });
+      if (!updatedColumn) {
+        return res.status(404).json({ message: "Column not found" });
+      }
+
+      res.status(200).json({ updatedColumn });
+    } catch (error) {
+      console.error(error);
+      res.status(401).json({ message: "Error updating column" });
     }
-
-    column.title = title;
-
-    await column.save();
-
-    res.status(200).json({ message: "Column successfully updated", column });
-  } catch (error) {
-    console.error(error);
-    res.status(401).json({ message: "Error updating column" });
   }
-});
+);
+
+router.post(
+  "/changeColumnPositions",
+  verifyToken,
+  async (req: Request, res: Response) => {
+    const { columns } = req.body;
+    try {
+      const user = await User.findOne({ email: req.email });
+      if (!user) {
+        return res.status(404).json({ message: "No authorised user" });
+      }
+
+      user.columns = columns;
+
+      await user.save();
+    } catch (error) {
+      console.error(error);
+      res.status(401).json({ message: "Error changing positions" });
+    }
+  }
+);
 
 export default router;

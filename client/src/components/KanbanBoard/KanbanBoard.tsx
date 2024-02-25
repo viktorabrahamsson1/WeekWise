@@ -39,6 +39,15 @@ function KanbanBoard() {
   const [activeTask, setActiveTask] = useState<Task | null>(null);
   const queryClient = useQueryClient();
 
+  const columnsId = useMemo(() => columns.map((col) => col._id), [columns]);
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 3,
+      },
+    }),
+  );
+
   const { isLoading } = useQuery({
     queryFn: apiClient.getColumns,
     queryKey: "columns",
@@ -65,18 +74,10 @@ function KanbanBoard() {
     },
   });
 
-  const columnsId = useMemo(() => columns.map((col) => col._id), [columns]);
-  const sensors = useSensors(
-    useSensor(PointerSensor, {
-      activationConstraint: {
-        distance: 3,
-      },
-    }),
-  );
-
   function updateColumn(id: Id, title: string) {
     const newColumns = columns.map((col) => {
       if (col._id !== id) return col;
+      apiClient.updateColumn(col._id, title);
       return { ...col, title };
     });
     setColumns(newColumns);
@@ -136,7 +137,10 @@ function KanbanBoard() {
       const overColumnIndex = columns.findIndex(
         (col) => col._id === overColumnId,
       );
-      return arrayMove(columns, activeColumnIndex, overColumnIndex);
+      const list = arrayMove(columns, activeColumnIndex, overColumnIndex);
+      apiClient.changePositions(list);
+
+      return list;
     });
   }
 
@@ -202,9 +206,7 @@ function KanbanBoard() {
                   key={col._id}
                   column={col}
                   deleteColumn={deleteColumn}
-                  updateColumn={(columnId, title) =>
-                    updateColumn(columnId, title)
-                  }
+                  updateColumn={updateColumn}
                   createTask={createTask}
                   updateTask={updateTask}
                   deleteTask={deleteTask}

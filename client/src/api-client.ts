@@ -4,8 +4,8 @@ import { SignInFormData } from "./pages/Login";
 import { AdminChangeFormDataExtra } from "./components/admincomponents/EditUser";
 import { User } from "./routes/admin routes/Users";
 import { ForgotPasswordData } from "./pages/ForgotPassword";
-import { Column } from "./types/columnType";
 import { Id } from "./components/KanbanBoard/KanbanBoard";
+import { Column } from "./components/KanbanBoard/KanbanBoard";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -170,14 +170,18 @@ export const getColumns = async () => {
   return columns;
 };
 
-export const createColumn = async (column: Column) => {
+type Title = {
+  title: string;
+};
+
+export const createColumn = async (title: Title) => {
   const response = await fetch(`${API_BASE_URL}/api/column/createColumn`, {
     method: "POST",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(column),
+    body: JSON.stringify(title),
   });
   const body = await response.json();
   if (!response.ok) throw new Error("Error creating column");
@@ -207,9 +211,29 @@ export const updateColumn = async (columnId: Id, title: string) => {
     body: JSON.stringify({ columnId, title }),
   });
 
-  if (!response.ok) throw new Error("Error updaing column");
-
+  if (!response.ok) {
+    const responseBody = await response.json();
+    throw new Error(responseBody.message);
+  }
   const updatedColumn = await response.json();
-
   return updatedColumn;
+};
+
+export const changePositions = async (columns: Column[]) => {
+  const response = await fetch(
+    `${API_BASE_URL}/api/column/changeColumnPositions`,
+    {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(columns),
+    },
+  );
+
+  if (!response.ok) {
+    const responseBody = await response.json();
+    throw new Error(responseBody.message);
+  }
 };
