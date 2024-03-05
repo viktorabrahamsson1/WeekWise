@@ -18,6 +18,7 @@ import VerifyEmail from "./pages/VerifyEmail";
 import ForgotPassword from "./pages/ForgotPassword";
 import VerifyPassword from "./pages/VerifyPassword";
 
+// ! Set login to root url
 const router = createBrowserRouter([
   {
     element: <Layout />,

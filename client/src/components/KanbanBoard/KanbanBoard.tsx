@@ -217,8 +217,7 @@ function KanbanBoard() {
           </div>
           <button
             onClick={() => {
-              const title = `Column ${columns.length + 1}`;
-              createColumn({ title });
+              createColumn(columns);
             }}
             className="flex h-[60px] w-[350px] min-w-[350px] cursor-pointer gap-2 rounded-lg border-2 border-indigo-300 bg-indigo-200 p-4 ring-indigo-200 duration-100 hover:ring-2 dark:border-slate-700 dark:bg-slate-700"
           >

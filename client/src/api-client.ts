@@ -166,22 +166,17 @@ export const getColumns = async () => {
   if (!response.ok) throw new Error("Error getting columns");
 
   const columns = await response.json();
-
   return columns;
 };
 
-type Title = {
-  title: string;
-};
-
-export const createColumn = async (title: Title) => {
+export const createColumn = async (columns: Column[]) => {
   const response = await fetch(`${API_BASE_URL}/api/column/createColumn`, {
     method: "POST",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(title),
+    body: JSON.stringify({ columns }),
   });
   const body = await response.json();
   if (!response.ok) throw new Error("Error creating column");
@@ -219,18 +214,15 @@ export const updateColumn = async (columnId: Id, title: string) => {
   return updatedColumn;
 };
 
-export const changePositions = async (columns: Column[]) => {
-  const response = await fetch(
-    `${API_BASE_URL}/api/column/changeColumnPositions`,
-    {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(columns),
+export const changePositions = async (orderdColumns: Column[]) => {
+  const response = await fetch(`${API_BASE_URL}/api/column/position`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
     },
-  );
+    body: JSON.stringify(orderdColumns),
+  });
 
   if (!response.ok) {
     const responseBody = await response.json();

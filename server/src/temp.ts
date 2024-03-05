@@ -1,14 +1,13 @@
 import express, { Request, Response } from "express";
 import Column from "../models/column";
 import verifyToken from "../middleware/verifyAuthToken";
+import User from "../models/user";
 
 const router = express.Router();
 
 router.get("/getColumns", verifyToken, async (req: Request, res: Response) => {
   try {
-    const columns = await Column.find({ userId: req.userId })
-      .sort("position")
-      .populate("tasks");
+    const columns = await Column.find({ userId: req.userId }).populate("tasks");
     return res.json(columns);
   } catch (error) {
     console.error(error);
@@ -21,14 +20,12 @@ router.post(
   verifyToken,
   async (req: Request, res: Response) => {
     try {
-      const { columns } = req.body;
+      const { title } = req.body;
       const column = new Column({
-        title: `Column ${columns.length + 1}`,
+        title,
         userId: req.userId,
-        position: columns.length,
       });
       await column.save();
-
       res.status(201).json(column);
     } catch (error) {
       console.error(error);
@@ -79,29 +76,19 @@ router.post(
 );
 
 router.post("/position", verifyToken, async (req: Request, res: Response) => {
+  const columns = req.body;
   try {
-    const orderedColumns = req.body;
-    console.log(orderedColumns);
+    const user = await User.findOne({ email: req.email });
+    if (!user) {
+      return res.status(404).json({ message: "No authorised user" });
+    }
 
-    await Promise.all(
-      orderedColumns.map(
-        (column: { _id: string; position: number }, index: number) =>
-          Column.findByIdAndUpdate(
-            column._id,
-            { position: index },
-            { new: true }
-          ).exec()
-      )
-    );
+    user.columns = columns;
 
-    const updatedColumns = await Column.find({ userId: req.userId })
-      .sort("position")
-      .populate("tasks");
-
-    res.status(200).json(updatedColumns);
+    await user.save();
   } catch (error) {
     console.error(error);
-    res.status(400).json({ message: "Error updating positions" });
+    res.status(401).json({ message: "Error changing positions" });
   }
 });
 
