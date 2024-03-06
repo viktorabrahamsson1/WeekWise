@@ -1,11 +1,11 @@
+import { ForgotPasswordData } from "./pages/ForgotPassword";
 import { RegisterFormData } from "./pages/Register";
 import { ChangeFormData } from "./routes/ChangeUserInfo";
 import { SignInFormData } from "./pages/Login";
-import { AdminChangeFormDataExtra } from "./components/admincomponents/EditUser";
-import { User } from "./routes/admin routes/Users";
-import { ForgotPasswordData } from "./pages/ForgotPassword";
-import { Id } from "./components/KanbanBoard/KanbanBoard";
 import { Column } from "./components/KanbanBoard/KanbanBoard";
+import { User } from "./routes/admin routes/Users";
+import { Id } from "./components/KanbanBoard/KanbanBoard";
+import { AdminChangeFormDataExtra } from "./components/admincomponents/EditUser";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -228,4 +228,65 @@ export const changePositions = async (orderdColumns: Column[]) => {
     const responseBody = await response.json();
     throw new Error(responseBody.message);
   }
+};
+
+export const getTasks = async () => {
+  const response = await fetch(`${API_BASE_URL}/api/task/getTasks`, {
+    method: "GET",
+    credentials: "include",
+  });
+
+  const body = await response.json();
+
+  if (!response.ok) throw new Error(body.message);
+
+  return body;
+};
+
+export const createTask = async (content: string, position: number) => {
+  const response = await fetch(`${API_BASE_URL}/api/task/createTask`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ content, position }),
+  });
+
+  const body = await response.json();
+
+  if (!response.ok) throw new Error(body.message);
+
+  return body;
+};
+
+export const updateTask = async (taskId: number, content: string) => {
+  const response = await fetch(`${API_BASE_URL}/api/task/updateTask`, {
+    method: "PATCH",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ taskId, content }),
+  });
+
+  const body = await response.json();
+
+  if (!response.ok) throw new Error(body.message);
+
+  return body;
+};
+
+export const deleteTask = async (taskId: number) => {
+  const response = await fetch(`${API_BASE_URL}/api/task/deleteTask`, {
+    method: "DELETE",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ taskId }),
+  });
+
+  const body = await response.json();
+  if (!response.ok) throw new Error(body.message);
 };

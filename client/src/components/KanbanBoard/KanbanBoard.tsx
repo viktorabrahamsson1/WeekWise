@@ -1,4 +1,7 @@
 import { useMemo, useState } from "react";
+import { SortableContext, arrayMove } from "@dnd-kit/sortable";
+import { createPortal } from "react-dom";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
   DndContext,
   DragEndEvent,
@@ -9,15 +12,13 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import { SortableContext, arrayMove } from "@dnd-kit/sortable";
-import PlusIcon from "../icons/PlusIcon";
+
 import ColumnContainer from "./ColumnContainer";
-import { createPortal } from "react-dom";
 import TaskCard from "./TaskCard";
-import * as apiClient from "../../api-client";
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import toast from "react-hot-toast";
 import Spinner from "../Spinner";
+import toast from "react-hot-toast";
+import PlusIcon from "../icons/PlusIcon";
+import * as apiClient from "../../api-client";
 
 export type Id = string | number;
 

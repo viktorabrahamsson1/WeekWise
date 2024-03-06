@@ -54,7 +54,7 @@ router.delete(
   }
 );
 
-router.post(
+router.patch(
   "/updateColumn",
   verifyToken,
   async (req: Request, res: Response) => {

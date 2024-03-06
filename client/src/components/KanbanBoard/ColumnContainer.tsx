@@ -1,9 +1,9 @@
 import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { Column, Id, Task } from "./KanbanBoard";
+import { useMemo, useState } from "react";
 import { CSS } from "@dnd-kit/utilities";
 
 import DeleteIcon from "../icons/DeleteIcon";
-import { useMemo, useState } from "react";
 import PlusIcon from "../icons/PlusIcon";
 import TaskCard from "./TaskCard";
 
