@@ -81,7 +81,6 @@ router.patch(
 router.post("/position", verifyToken, async (req: Request, res: Response) => {
   try {
     const orderedColumns = req.body;
-    console.log(orderedColumns);
 
     await Promise.all(
       orderedColumns.map(

@@ -198,7 +198,7 @@ export const deleteColumn = async (columnId: string | number) => {
 
 export const updateColumn = async (columnId: Id, title: string) => {
   const response = await fetch(`${API_BASE_URL}/api/column/updateColumn`, {
-    method: "POST",
+    method: "PATCH",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
