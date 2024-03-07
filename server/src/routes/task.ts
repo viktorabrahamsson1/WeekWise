@@ -16,13 +16,16 @@ router.get("/getTasks", verifyToken, async (req: Request, res: Response) => {
 
 router.post("/createTask", verifyToken, async (req: Request, res: Response) => {
   try {
-    const { content, position } = req.body;
+    const { columnId, position, content } = req.body;
 
     const task = new Task({
-      content,
-      position,
+      columnId,
       userId: req.userId,
+      position,
+      content,
     });
+
+    await task.save();
 
     res.status(200).json(task);
   } catch (error) {
@@ -51,7 +54,7 @@ router.delete(
   async (req: Request, res: Response) => {
     try {
       const { taskId } = req.body;
-      Task.findByIdAndUpdate(taskId);
+      await Task.findByIdAndDelete(taskId);
 
       res.status(200).json({ message: "Task deleted" });
     } catch (error) {

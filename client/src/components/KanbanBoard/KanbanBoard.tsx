@@ -28,16 +28,17 @@ export type Column = {
 };
 
 export type Task = {
-  id: Id;
+  _id: Id;
   columnId: Id;
   content: string;
 };
 
 function KanbanBoard() {
   const [columns, setColumns] = useState<Column[]>([]);
-  const [activeColumn, setActiveColumn] = useState<Column | null>(null);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [activeTask, setActiveTask] = useState<Task | null>(null);
+  const [activeColumn, setActiveColumn] = useState<Column | null>(null);
+
   const queryClient = useQueryClient();
 
   const columnsId = useMemo(() => columns.map((col) => col._id), [columns]);
@@ -54,6 +55,14 @@ function KanbanBoard() {
     queryKey: "columns",
     onSuccess: (data) => {
       setColumns(data);
+    },
+  });
+
+  const { isLoading: isTaskLoading } = useQuery({
+    queryFn: apiClient.getTasks,
+    queryKey: "tasks",
+    onSuccess: (data) => {
+      setTasks(data);
     },
   });
 
@@ -85,26 +94,33 @@ function KanbanBoard() {
   }
 
   function createTask(columnId: Id) {
-    const newTask: Task = {
-      id: genereteId(),
-      columnId,
-      content: `Task ${tasks.length + 1}`,
-    };
-
-    setTasks([...tasks, newTask]);
+    apiClient
+      .createTask(columnId, tasks.length, `Task ${tasks.length + 1}`)
+      .then((createdTask) => {
+        setTasks([...tasks, createdTask]);
+      });
   }
 
   function updateTask(id: Id, content: string) {
     const newTasks = tasks.map((task) => {
-      if (task.id !== id) return task;
+      if (task._id !== id) return task;
       return { ...task, content };
     });
+
     setTasks(newTasks);
   }
 
+  const { mutate: deleteTASK } = useMutation(apiClient.deleteTask, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("tasks");
+    },
+    onError: () => {
+      toast.error("Error deleting task");
+    },
+  });
+
   function deleteTask(id: Id) {
-    const newTasks = tasks.filter((task) => task.id !== id);
-    setTasks(newTasks);
+    deleteTASK(id);
   }
 
   function onDragStart(event: DragStartEvent) {
@@ -161,10 +177,12 @@ function KanbanBoard() {
 
     if (isActiveATask && isOverATask) {
       setTasks((tasks) => {
-        const activeIndex = tasks.findIndex((t) => t.id === activeId);
-        const overIndex = tasks.findIndex((t) => t.id === overId);
+        const activeIndex = tasks.findIndex((t) => t._id === activeId);
+        const overIndex = tasks.findIndex((t) => t._id === overId);
 
         tasks[activeIndex].columnId = tasks[overIndex].columnId;
+        const x = arrayMove(tasks, activeIndex, overIndex);
+        console.log(x);
 
         return arrayMove(tasks, activeIndex, overIndex);
       });
@@ -173,7 +191,7 @@ function KanbanBoard() {
 
       if (isActiveATask && isOverAColumn) {
         setTasks((tasks) => {
-          const activeIndex = tasks.findIndex((t) => t.id === activeId);
+          const activeIndex = tasks.findIndex((t) => t._id === activeId);
 
           tasks[activeIndex].columnId = overId;
 
@@ -183,11 +201,7 @@ function KanbanBoard() {
     }
   }
 
-  function genereteId() {
-    return Math.floor(Math.random() * 10001);
-  }
-
-  if (isLoading) {
+  if (isLoading || isTaskLoading) {
     return <Spinner />;
   }
 

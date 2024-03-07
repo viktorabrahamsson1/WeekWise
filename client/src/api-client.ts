@@ -243,14 +243,18 @@ export const getTasks = async () => {
   return body;
 };
 
-export const createTask = async (content: string, position: number) => {
+export const createTask = async (
+  columnId: Id,
+  position: number,
+  content: string,
+) => {
   const response = await fetch(`${API_BASE_URL}/api/task/createTask`, {
     method: "POST",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ content, position }),
+    body: JSON.stringify({ columnId, position, content }),
   });
 
   const body = await response.json();
@@ -277,7 +281,7 @@ export const updateTask = async (taskId: number, content: string) => {
   return body;
 };
 
-export const deleteTask = async (taskId: number) => {
+export const deleteTask = async (taskId: Id) => {
   const response = await fetch(`${API_BASE_URL}/api/task/deleteTask`, {
     method: "DELETE",
     credentials: "include",

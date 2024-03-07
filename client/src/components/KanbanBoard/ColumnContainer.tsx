@@ -27,7 +27,7 @@ function ColumnContainer({
   tasks,
 }: Props) {
   const [editMode, setEditMode] = useState(false);
-  const tasksIds = useMemo(() => tasks.map((task) => task.id), [tasks]);
+  const tasksIds = useMemo(() => tasks.map((task) => task._id), [tasks]);
 
   const {
     setNodeRef,
@@ -103,16 +103,16 @@ function ColumnContainer({
         </button>
       </div>
       <div className="flex flex-grow flex-col gap-4 overflow-y-auto overflow-x-hidden p-2">
-        {tasks.map((task) => (
-          <SortableContext items={tasksIds} key={task.id}>
+        <SortableContext items={tasksIds}>
+          {tasks.map((task) => (
             <TaskCard
-              key={task.id}
+              key={task._id}
               task={task}
               deleteTask={deleteTask}
               updateTask={updateTask}
             />
-          </SortableContext>
-        ))}
+          ))}
+        </SortableContext>
       </div>
       <button
         onClick={() => {

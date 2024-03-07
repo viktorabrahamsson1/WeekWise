@@ -23,7 +23,7 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
     transition,
     isDragging,
   } = useSortable({
-    id: task.id,
+    id: task._id,
     data: {
       type: "Task",
       task,
@@ -70,7 +70,7 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
               toggleEditMode();
             }
           }}
-          onChange={(e) => updateTask(task.id, e.target.value)}
+          onChange={(e) => updateTask(task._id, e.target.value)}
           className="h-[90%] w-full resize-none rounded border-none bg-transparent text-gray-700 focus:outline-none dark:text-gray-200"
         ></textarea>
       </div>
@@ -98,7 +98,7 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
       {mouseIsOver && (
         <button
           onClick={() => {
-            deleteTask(task.id);
+            deleteTask(task._id);
           }}
           className="absolute right-8 top-1/2 -translate-y-1/2 "
         >

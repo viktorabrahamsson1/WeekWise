@@ -1,12 +1,9 @@
 import { Link } from "react-router-dom";
-import { useAppContext } from "../../contexts/AppContext";
 
-import SignOutButton from "../SignOutButton";
 import { HiOutlineMoon, HiOutlineSun } from "react-icons/hi2";
 import { useDarkMode } from "../../hooks/useDarkMode";
 
 function Header() {
-  const { isLoggedIn } = useAppContext();
   const { toggleDarkMode, isDark } = useDarkMode();
 
   return (
@@ -34,7 +31,6 @@ function Header() {
                 className="cursor-pointer text-gray-600 duration-150 hover:text-gray-800"
               />
             )}
-            {isLoggedIn && <SignOutButton />}
           </>
         </div>
       </div>
