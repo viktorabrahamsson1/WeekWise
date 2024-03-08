@@ -39,7 +39,12 @@ router.patch(
   async (req: Request, res: Response) => {
     try {
       const { taskId, content } = req.body;
-      const updatedTask = Task.findOneAndUpdate(taskId, { content });
+      const updatedTask = await Task.findById(taskId);
+      if (!updatedTask) {
+        return res.status(200).json({ message: "No task found" });
+      }
+      updatedTask.content = content;
+      await updatedTask.save();
 
       res.status(200).json({ updatedTask, message: "Created task" });
     } catch (error) {

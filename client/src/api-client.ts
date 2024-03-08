@@ -264,7 +264,7 @@ export const createTask = async (
   return body;
 };
 
-export const updateTask = async (taskId: number, content: string) => {
+export const updateTask = async (taskId: Id, content: string) => {
   const response = await fetch(`${API_BASE_URL}/api/task/updateTask`, {
     method: "PATCH",
     credentials: "include",

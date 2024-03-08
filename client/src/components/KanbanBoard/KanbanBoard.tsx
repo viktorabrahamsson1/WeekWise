@@ -106,6 +106,7 @@ function KanbanBoard() {
       if (task._id !== id) return task;
       return { ...task, content };
     });
+    apiClient.updateTask(id, content);
 
     setTasks(newTasks);
   }
@@ -181,7 +182,6 @@ function KanbanBoard() {
         const overIndex = tasks.findIndex((t) => t._id === overId);
 
         tasks[activeIndex].columnId = tasks[overIndex].columnId;
-        console.log(tasks[activeIndex]);
         apiClient.updateTaskColumn(
           tasks[activeIndex]._id,
           tasks[overIndex].columnId,
