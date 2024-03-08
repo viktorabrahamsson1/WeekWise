@@ -12,7 +12,7 @@ function ProtectedRoute({ children }: ProtectedRouteProps) {
     return <Navigate to="/login" replace />;
   }
 
-  return <div className="container mx-auto max-w-[70rem] ">{children}</div>;
+  return <div className="mx-auto max-w-[70rem] ">{children}</div>;
 }
 
 export default ProtectedRoute;

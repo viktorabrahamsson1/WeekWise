@@ -17,8 +17,8 @@ import Retrived from "./routes/Retrived";
 import VerifyEmail from "./pages/VerifyEmail";
 import ForgotPassword from "./pages/ForgotPassword";
 import VerifyPassword from "./pages/VerifyPassword";
+import Week from "./components/calender/week/Week";
 
-// ! Set login to root url
 const router = createBrowserRouter([
   {
     element: <Layout />,
@@ -36,6 +36,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Calender />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/calender/:week",
+        element: (
+          <ProtectedRoute>
+            <Week />
           </ProtectedRoute>
         ),
       },
