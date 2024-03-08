@@ -63,4 +63,25 @@ router.delete(
   }
 );
 
+router.patch(
+  "/updateActiveColumn",
+  verifyToken,
+  async (req: Request, res: Response) => {
+    try {
+      const { taskId, columnId } = req.body;
+      const task = await Task.findById(taskId);
+      if (!task) {
+        return res.status(400).json({ message: "No task found" });
+      }
+
+      task.columnId = columnId;
+      await task.save();
+
+      res.status(200).json({ message: "task position successfully changed" });
+    } catch (error) {
+      res.status(400).json({ message: "Error updating task position" });
+    }
+  }
+);
+
 export default router;

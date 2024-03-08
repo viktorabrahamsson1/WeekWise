@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import Column from "../models/column";
+import Task from "../models/task";
 import verifyToken from "../middleware/verifyAuthToken";
 
 const router = express.Router();
@@ -46,6 +47,8 @@ router.delete(
       if (!deletedColumn) {
         return res.status(404).json({ message: "Column not found" });
       }
+      await Task.deleteMany({ columnId });
+
       res.status(200).json({ message: "Column deleted successfully" });
     } catch (error) {
       console.error(error);

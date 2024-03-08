@@ -181,8 +181,11 @@ function KanbanBoard() {
         const overIndex = tasks.findIndex((t) => t._id === overId);
 
         tasks[activeIndex].columnId = tasks[overIndex].columnId;
-        const x = arrayMove(tasks, activeIndex, overIndex);
-        console.log(x);
+        console.log(tasks[activeIndex]);
+        apiClient.updateTaskColumn(
+          tasks[activeIndex]._id,
+          tasks[overIndex].columnId,
+        );
 
         return arrayMove(tasks, activeIndex, overIndex);
       });

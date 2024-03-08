@@ -294,3 +294,17 @@ export const deleteTask = async (taskId: Id) => {
   const body = await response.json();
   if (!response.ok) throw new Error(body.message);
 };
+
+export const updateTaskColumn = async (taskId: Id, columnId: Id) => {
+  const response = await fetch(`${API_BASE_URL}/api/task/updateActiveColumn`, {
+    method: "PATCH",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ taskId, columnId }),
+  });
+
+  const body = await response.json();
+  if (!response.ok) throw new Error(body.message);
+};
