@@ -6,13 +6,22 @@ import Task from "./Task";
 import PlusIcon from "../../icons/PlusIcon";
 
 type WeekProps = {
+  week: number;
   day: string;
   tasks: TaskItem[];
-  createTask: (week: number, day: string, content: string) => void;
+  createTask: (week: number, day: string) => void;
   deleteTask: (_id: Id) => void;
+  updateTask: (taskId: string, content: string) => void;
 };
 
-function Day({ day, tasks, createTask, deleteTask }: WeekProps) {
+function Day({
+  week,
+  day,
+  tasks,
+  createTask,
+  deleteTask,
+  updateTask,
+}: WeekProps) {
   const tasksIds = useMemo(() => tasks.map((task) => task._id), [tasks]);
 
   return (
@@ -24,13 +33,18 @@ function Day({ day, tasks, createTask, deleteTask }: WeekProps) {
         <div className="flex flex-grow flex-col gap-4 overflow-y-auto overflow-x-hidden p-2">
           <SortableContext items={tasksIds}>
             {tasks.map((task) => (
-              <Task key={task._id} task={task} deleteTask={deleteTask} />
+              <Task
+                key={task._id}
+                task={task}
+                deleteTask={deleteTask}
+                updateTask={updateTask}
+              />
             ))}
           </SortableContext>
         </div>
         <button
           onClick={() => {
-            createTask(2, "asd", day);
+            createTask(week, day);
           }}
           className="flex items-center border-t-2 border-indigo-200 p-4 hover:bg-indigo-200 hover:text-gray-900 active:bg-slate-600 dark:border-slate-800 dark:hover:bg-slate-700 dark:hover:text-indigo-300"
         >

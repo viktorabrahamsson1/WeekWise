@@ -309,6 +309,20 @@ export const updateTaskColumn = async (taskId: Id, columnId: Id) => {
   if (!response.ok) throw new Error(body.message);
 };
 
+export const getCalenderTasks = async (week: number) => {
+  const response = await fetch(`${API_BASE_URL}/api/calenderTask/${week}`, {
+    method: "GET",
+    credentials: "include",
+  });
+  const body = await response.json();
+
+  if (!response.ok) {
+    throw new Error(body.message);
+  }
+
+  return body;
+};
+
 export const createCalenderTask = async (
   content: string,
   day: string,
@@ -326,14 +340,18 @@ export const createCalenderTask = async (
     },
   );
 
+  const body = await response.json();
+
   if (!response.ok) {
-    throw new Error("Error creating calender task");
+    throw new Error(body.message);
   }
+
+  return body;
 };
 
 export const deleteCalenderTask = async (taskId: Id) => {
   const response = await fetch(
-    `${API_BASE_URL}/api/calenderTask/createCalenderTask`,
+    `${API_BASE_URL}/api/calenderTask/deleteCalenderTask`,
     {
       method: "DELETE",
       credentials: "include",
@@ -348,17 +366,24 @@ export const deleteCalenderTask = async (taskId: Id) => {
     throw new Error("Error creating calender task");
   }
 };
+export const updateCalenderTask = async (taskId: Id, content: string) => {
+  console.log(content);
+  const response = await fetch(
+    `${API_BASE_URL}/api/calenderTask/updateCalenderTask`,
+    {
+      method: "PATCH",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ taskId, content }),
+    },
+  );
 
-export const getCalenderTasks = async (week: number) => {
-  const response = await fetch(`${API_BASE_URL}/api/calenderTask/${week}`, {
-    method: "GET",
-    credentials: "include",
-  });
   const body = await response.json();
 
   if (!response.ok) {
     throw new Error(body.message);
   }
-
   return body;
 };
