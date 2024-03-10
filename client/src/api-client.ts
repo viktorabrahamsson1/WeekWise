@@ -308,3 +308,57 @@ export const updateTaskColumn = async (taskId: Id, columnId: Id) => {
   const body = await response.json();
   if (!response.ok) throw new Error(body.message);
 };
+
+export const createCalenderTask = async (
+  content: string,
+  day: string,
+  week: number,
+) => {
+  const response = await fetch(
+    `${API_BASE_URL}/api/calenderTask/createCalenderTask`,
+    {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ content, day, week }),
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error("Error creating calender task");
+  }
+};
+
+export const deleteCalenderTask = async (taskId: Id) => {
+  const response = await fetch(
+    `${API_BASE_URL}/api/calenderTask/createCalenderTask`,
+    {
+      method: "DELETE",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ taskId }),
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error("Error creating calender task");
+  }
+};
+
+export const getCalenderTasks = async (week: number) => {
+  const response = await fetch(`${API_BASE_URL}/api/calenderTask/${week}`, {
+    method: "GET",
+    credentials: "include",
+  });
+  const body = await response.json();
+
+  if (!response.ok) {
+    throw new Error(body.message);
+  }
+
+  return body;
+};

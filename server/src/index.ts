@@ -12,6 +12,7 @@ import userRoutes from "./routes/user";
 import adminRoutes from "./routes/admin";
 import columnRoutes from "./routes/column";
 import taskRoutes from "./routes/task";
+import calenderTasksRoutes from "./routes/calenderTask";
 
 mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string);
 
@@ -32,6 +33,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/column", columnRoutes);
 app.use("/api/task", taskRoutes);
+app.use("/api/calenderTask", calenderTasksRoutes);
 
 const PORT = 9000;
 app.listen(PORT, () => {
