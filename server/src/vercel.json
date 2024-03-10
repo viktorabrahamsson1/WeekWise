@@ -2,14 +2,22 @@
   "version": 2,
   "builds": [
     {
-      "src": "*.ts",
+      "src": "server/index.ts",
+      "use": "@now/node"
+    },
+    {
+      "src": "client/main.tsx",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
+      "src": "/api/(.*)",
+      "dest": "/server/index.ts"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/"
+      "dest": "/client/dist/$1"
     }
   ]
 }
