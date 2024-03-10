@@ -44,13 +44,13 @@ function DeleteUser({
         <div className="flex items-center gap-2 text-gray-200">
           <button
             onClick={() => toggleDelete()}
-            className="rounded-md bg-gray-600 px-4 py-1  dark:hover:bg-gray-500"
+            className="rounded-md bg-gray-600 px-4 py-1  hover:bg-gray-700 dark:hover:bg-gray-500"
           >
             Cancel
           </button>
           <button
             onClick={() => deleteUser(currentUser)}
-            className="text-nowrap rounded-md  bg-red-400 px-4 py-1 dark:hover:bg-red-500"
+            className="text-nowrap rounded-md  bg-red-400 px-4 py-1 hover:bg-red-500"
           >
             Yes, delete
           </button>

@@ -14,6 +14,7 @@ interface Props {
   createTask: (columnId: Id) => void;
   deleteTask: (id: Id) => void;
   updateTask: (id: Id, content: string) => void;
+  updateTaskDB: (id: Id, content: string) => void;
   tasks: Task[];
 }
 
@@ -24,6 +25,7 @@ function ColumnContainer({
   createTask,
   deleteTask,
   updateTask,
+  updateTaskDB,
   tasks,
 }: Props) {
   const [editMode, setEditMode] = useState(false);
@@ -110,6 +112,7 @@ function ColumnContainer({
               task={task}
               deleteTask={deleteTask}
               updateTask={updateTask}
+              updateTaskDB={updateTaskDB}
             />
           ))}
         </SortableContext>

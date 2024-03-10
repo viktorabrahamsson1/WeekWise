@@ -12,6 +12,7 @@ type WeekProps = {
   createTask: (week: number, day: string) => void;
   deleteTask: (_id: Id) => void;
   updateTask: (taskId: string, content: string) => void;
+  updateTaskDB: (taskId: string, content: string) => void;
 };
 
 function Day({
@@ -21,12 +22,13 @@ function Day({
   createTask,
   deleteTask,
   updateTask,
+  updateTaskDB,
 }: WeekProps) {
   const tasksIds = useMemo(() => tasks.map((task) => task._id), [tasks]);
 
   return (
     <div>
-      <div className="flex h-[500px] max-h-[500px] w-[250px] flex-col rounded-md bg-indigo-100 dark:bg-slate-600">
+      <div className=" flex h-[500px] max-h-[500px] w-[250px] flex-col rounded-md bg-indigo-100 dark:bg-slate-600">
         <div className="flex h-[60px] items-center justify-between rounded-md rounded-b-none border-2 border-indigo-100 bg-indigo-200 p-3 text-lg font-bold dark:border-slate-600 dark:bg-slate-700">
           <span>{day}</span>
         </div>
@@ -38,6 +40,7 @@ function Day({
                 task={task}
                 deleteTask={deleteTask}
                 updateTask={updateTask}
+                updateTaskDB={updateTaskDB}
               />
             ))}
           </SortableContext>

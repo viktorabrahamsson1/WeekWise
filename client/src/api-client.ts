@@ -243,18 +243,14 @@ export const getTasks = async () => {
   return body;
 };
 
-export const createTask = async (
-  columnId: Id,
-  position: number,
-  content: string,
-) => {
+export const createTask = async (columnId: Id, content: string) => {
   const response = await fetch(`${API_BASE_URL}/api/task/createTask`, {
     method: "POST",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ columnId, position, content }),
+    body: JSON.stringify({ columnId, content }),
   });
 
   const body = await response.json();
@@ -367,7 +363,6 @@ export const deleteCalenderTask = async (taskId: Id) => {
   }
 };
 export const updateCalenderTask = async (taskId: Id, content: string) => {
-  console.log(content);
   const response = await fetch(
     `${API_BASE_URL}/api/calenderTask/updateCalenderTask`,
     {

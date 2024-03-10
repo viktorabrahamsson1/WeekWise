@@ -1,12 +1,12 @@
-import { useState } from "react";
-
-import Day from "./Day";
-import * as apiClient from "../../../api-client";
+import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
-import Spinner from "../../Spinner";
 import { useParams } from "react-router";
 import { HiArrowUturnLeft } from "react-icons/hi2";
-import { Link } from "react-router-dom";
+
+import Day from "./Day";
+import Spinner from "../../Spinner";
+import * as apiClient from "../../../api-client";
+import useTask from "./actions/task";
 
 const days = [
   "Monday",
@@ -27,34 +27,15 @@ export type TaskItem = {
 };
 
 function Week() {
-  const [tasks, setTasks] = useState<TaskItem[]>([]);
   const { week } = useParams();
+  const { createTask, deleteTask, setTasks, tasks, updateTask, updateTaskDB } =
+    useTask();
 
   const { isLoading } = useQuery({
     queryFn: async () =>
       apiClient.getCalenderTasks(Number(week)).then((data) => setTasks(data)),
     queryKey: "calenderTasks",
   });
-
-  const createTask = (week: number, day: string) => {
-    apiClient
-      .createCalenderTask(`Task ${tasks.length + 1}`, day, week)
-      .then((data) => setTasks((tasks) => [...tasks, data]));
-  };
-
-  const deleteTask = (taskId: Id) => {
-    apiClient.deleteCalenderTask(taskId);
-    setTasks((tasks) => tasks.filter((task) => task._id !== taskId));
-  };
-
-  const updateTask = (taskId: Id, content: string) => {
-    const newTasks = tasks.map((task) => {
-      if (task._id !== taskId) return task;
-      return { ...task, content };
-    });
-    setTasks(newTasks);
-    apiClient.updateCalenderTask(taskId, content);
-  };
 
   if (isLoading || !week) {
     return (
@@ -65,7 +46,7 @@ function Week() {
   }
 
   return (
-    <div className="relative flex flex-wrap gap-4">
+    <div className="relative flex flex-wrap justify-center gap-4">
       {days.map((day) => (
         <Day
           key={day}
@@ -75,10 +56,11 @@ function Week() {
           createTask={createTask}
           deleteTask={deleteTask}
           updateTask={updateTask}
+          updateTaskDB={updateTaskDB}
         />
       ))}
       <Link to="/calender">
-        <HiArrowUturnLeft className="absolute left-[-3rem] top-2 size-8 cursor-pointer duration-100 hover:text-gray-800 dark:hover:text-gray-400" />
+        <HiArrowUturnLeft className="absolute left-[-0.5rem] top-[-3rem] size-8 cursor-pointer duration-100 hover:text-gray-800 dark:hover:text-gray-400" />
       </Link>
     </div>
   );

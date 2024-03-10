@@ -95,7 +95,7 @@ function KanbanBoard() {
 
   function createTask(columnId: Id) {
     apiClient
-      .createTask(columnId, tasks.length, `Task ${tasks.length + 1}`)
+      .createTask(columnId, `Task ${tasks.length + 1}`)
       .then((createdTask) => {
         setTasks([...tasks, createdTask]);
       });
@@ -106,10 +106,13 @@ function KanbanBoard() {
       if (task._id !== id) return task;
       return { ...task, content };
     });
-    apiClient.updateTask(id, content);
 
     setTasks(newTasks);
   }
+
+  const updateTaskDB = (id: Id, content: string) => {
+    apiClient.updateTask(id, content);
+  };
 
   const { mutate: deleteTASK } = useMutation(apiClient.deleteTask, {
     onSuccess: () => {
@@ -227,6 +230,7 @@ function KanbanBoard() {
                   updateColumn={updateColumn}
                   createTask={createTask}
                   updateTask={updateTask}
+                  updateTaskDB={updateTaskDB}
                   deleteTask={deleteTask}
                   tasks={tasks.filter((task) => task.columnId === col._id)}
                 />
@@ -252,6 +256,7 @@ function KanbanBoard() {
                 updateColumn={updateColumn}
                 createTask={createTask}
                 updateTask={updateTask}
+                updateTaskDB={updateTaskDB}
                 deleteTask={deleteTask}
                 tasks={tasks.filter(
                   (task) => task.columnId === activeColumn._id,
@@ -263,6 +268,7 @@ function KanbanBoard() {
                 task={activeTask}
                 deleteTask={deleteTask}
                 updateTask={updateTask}
+                updateTaskDB={updateTaskDB}
               />
             )}
           </DragOverlay>,

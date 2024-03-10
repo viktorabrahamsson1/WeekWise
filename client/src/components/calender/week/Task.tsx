@@ -7,9 +7,10 @@ interface Props {
   task: TaskItem;
   deleteTask: (_id: Id) => void;
   updateTask: (taskId: string, content: string) => void;
+  updateTaskDB: (taskId: string, content: string) => void;
 }
 
-function Task({ task, deleteTask, updateTask }: Props) {
+function Task({ task, deleteTask, updateTask, updateTaskDB }: Props) {
   const [mouseIsOver, setMouseIsOver] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
@@ -20,15 +21,21 @@ function Task({ task, deleteTask, updateTask }: Props) {
 
   if (editMode) {
     return (
-      <div className=" relative flex h-[100px] min-h-[100px] cursor-grab items-center rounded-md p-2.5 text-left  hover:ring-2 hover:ring-inset hover:ring-indigo-400 dark:bg-slate-700 dark:hover:ring-slate-900">
+      <div className=" relative flex h-[100px] min-h-[100px]  items-center rounded-md p-2.5 text-left  hover:ring-2 hover:ring-inset hover:ring-indigo-400 dark:bg-slate-700 dark:hover:ring-slate-900">
         <textarea
           value={task.content}
           autoFocus
           placeholder="Task content here"
-          onBlur={toggleEditMode}
+          onBlur={() => {
+            toggleEditMode();
+            updateTaskDB(task._id, task.content);
+            console.log(task.content);
+          }}
           onKeyDown={(e) => {
             if (e.key === "Enter" && e.shiftKey) {
               toggleEditMode();
+              updateTaskDB(task._id, task.content);
+              console.log(task.content);
             }
           }}
           onChange={(e) => updateTask(task._id, e.target.value)}
@@ -47,7 +54,7 @@ function Task({ task, deleteTask, updateTask }: Props) {
       onMouseLeave={() => {
         setMouseIsOver(false);
       }}
-      className="relative flex h-[100px] min-h-[100px] cursor-grab items-center rounded-md bg-indigo-300 p-2.5 text-left hover:ring-2 hover:ring-inset hover:ring-indigo-400 dark:bg-slate-700 dark:hover:ring-indigo-300"
+      className="relative flex h-[100px] min-h-[100px] cursor-text items-center rounded-md bg-indigo-300 p-2.5 text-left hover:ring-2 hover:ring-inset hover:ring-indigo-400 dark:bg-slate-700 dark:hover:ring-indigo-300 "
     >
       <p className="my-auto h-[90%] w-full overflow-y-auto overflow-x-hidden whitespace-pre-wrap ">
         {task.content}
@@ -57,7 +64,7 @@ function Task({ task, deleteTask, updateTask }: Props) {
           onClick={() => {
             deleteTask(task._id);
           }}
-          className="absolute right-8 top-1/2 -translate-y-1/2 "
+          className="absolute right-4 top-1/2 -translate-y-1/2 "
         >
           <DeleteIcon />
         </button>

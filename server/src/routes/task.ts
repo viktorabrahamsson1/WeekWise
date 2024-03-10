@@ -16,12 +16,11 @@ router.get("/getTasks", verifyToken, async (req: Request, res: Response) => {
 
 router.post("/createTask", verifyToken, async (req: Request, res: Response) => {
   try {
-    const { columnId, position, content } = req.body;
+    const { columnId, content } = req.body;
 
     const task = new Task({
       columnId,
       userId: req.userId,
-      position,
       content,
     });
 

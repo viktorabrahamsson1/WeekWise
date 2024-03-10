@@ -9,9 +9,10 @@ interface Props {
   task: Task;
   deleteTask: (id: Id) => void;
   updateTask: (id: Id, content: string) => void;
+  updateTaskDB: (id: Id, content: string) => void;
 }
 
-function TaskCard({ task, deleteTask, updateTask }: Props) {
+function TaskCard({ task, deleteTask, updateTask, updateTaskDB }: Props) {
   const [mouseIsOver, setMouseIsOver] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
@@ -64,10 +65,14 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
           value={task.content}
           autoFocus
           placeholder="Task content here"
-          onBlur={toggleEditMode}
+          onBlur={() => {
+            toggleEditMode();
+            updateTaskDB(task._id, task.content);
+          }}
           onKeyDown={(e) => {
             if (e.key === "Enter" && e.shiftKey) {
               toggleEditMode();
+              updateTaskDB(task._id, task.content);
             }
           }}
           onChange={(e) => updateTask(task._id, e.target.value)}

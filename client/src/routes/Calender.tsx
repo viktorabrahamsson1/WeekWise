@@ -3,7 +3,7 @@ import CalenderMain from "../components/calender/CalenderMain";
 
 function Calender() {
   return (
-    <div className="mx-auto flex flex-col gap-10">
+    <div className="flex flex-col gap-10">
       <CalenderHeader />
       <CalenderMain />
     </div>
