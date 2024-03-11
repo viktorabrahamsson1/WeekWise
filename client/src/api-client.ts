@@ -10,7 +10,7 @@ import { AdminChangeFormDataExtra } from "./components/admincomponents/EditUser"
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const register = async (formData: RegisterFormData) => {
-  const response = await fetch(`${API_BASE_URL}api/createUser/register`, {
+  const response = await fetch(`${API_BASE_URL}/api/createUser/register`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -27,7 +27,7 @@ export const register = async (formData: RegisterFormData) => {
 };
 
 export const signIn = async (formData: SignInFormData) => {
-  const response = await fetch(`${API_BASE_URL}api/auth/login`, {
+  const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -44,7 +44,7 @@ export const signIn = async (formData: SignInFormData) => {
 };
 
 export const signOut = async () => {
-  const response = await fetch(`${API_BASE_URL}api/auth/logout`, {
+  const response = await fetch(`${API_BASE_URL}/api/auth/logout`, {
     method: "POST",
     credentials: "include",
   });
@@ -55,7 +55,7 @@ export const signOut = async () => {
 };
 
 export const editUserInfo = async (formData: ChangeFormData) => {
-  const response = await fetch(`${API_BASE_URL}api/user/updateUserInfo`, {
+  const response = await fetch(`${API_BASE_URL}/api/user/updateUserInfo`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -74,7 +74,7 @@ export const editUserInfo = async (formData: ChangeFormData) => {
 };
 
 export const getUsers = async () => {
-  const response = await fetch(`${API_BASE_URL}api/admin/getUsers`);
+  const response = await fetch(`${API_BASE_URL}/api/admin/getUsers`);
 
   const body = await response.json();
 
@@ -84,7 +84,7 @@ export const getUsers = async () => {
 };
 
 export const forgotPassword = async (formData: ForgotPasswordData) => {
-  const response = await fetch(`${API_BASE_URL}api/user/forgotPassword`, {
+  const response = await fetch(`${API_BASE_URL}/api/user/forgotPassword`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -96,7 +96,7 @@ export const forgotPassword = async (formData: ForgotPasswordData) => {
 };
 
 export const adminEditUserInfo = async (formData: AdminChangeFormDataExtra) => {
-  const response = await fetch(`${API_BASE_URL}api/admin/updateUserInfo`, {
+  const response = await fetch(`${API_BASE_URL}/api/admin/updateUserInfo`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -113,7 +113,7 @@ export const adminEditUserInfo = async (formData: AdminChangeFormDataExtra) => {
 };
 
 export const adminDeleteUser = async (user: User) => {
-  const response = await fetch(`${API_BASE_URL}api/admin/deleteUser`, {
+  const response = await fetch(`${API_BASE_URL}/api/admin/deleteUser`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -127,7 +127,7 @@ export const adminDeleteUser = async (user: User) => {
 
 export const adminGetUsersToday = async (date: string): Promise<User[]> => {
   const response = await fetch(
-    `${API_BASE_URL}api/admin/getUserToday/${date}`,
+    `${API_BASE_URL}/api/admin/getUserToday/${date}`,
     {
       method: "GET",
       credentials: "include",
@@ -145,7 +145,7 @@ export const adminGetUsersToday = async (date: string): Promise<User[]> => {
 };
 
 export const verifyAuthToken = async () => {
-  const response = await fetch(`${API_BASE_URL}api/auth/validate-token`, {
+  const response = await fetch(`${API_BASE_URL}/api/auth/validate-token`, {
     credentials: "include",
   });
 
@@ -159,7 +159,7 @@ export const verifyAuthToken = async () => {
 };
 
 export const getColumns = async () => {
-  const response = await fetch(`${API_BASE_URL}api/column/getColumns`, {
+  const response = await fetch(`${API_BASE_URL}/api/column/getColumns`, {
     method: "GET",
     credentials: "include",
   });
@@ -170,7 +170,7 @@ export const getColumns = async () => {
 };
 
 export const createColumn = async (columns: Column[]) => {
-  const response = await fetch(`${API_BASE_URL}api/column/createColumn`, {
+  const response = await fetch(`${API_BASE_URL}/api/column/createColumn`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -186,7 +186,7 @@ export const createColumn = async (columns: Column[]) => {
 
 export const deleteColumn = async (columnId: string | number) => {
   const response = await fetch(
-    `${API_BASE_URL}api/column/deleteColumn/${columnId}`,
+    `${API_BASE_URL}/api/column/deleteColumn/${columnId}`,
     {
       method: "DELETE",
       credentials: "include",
@@ -197,7 +197,7 @@ export const deleteColumn = async (columnId: string | number) => {
 };
 
 export const updateColumn = async (columnId: Id, title: string) => {
-  const response = await fetch(`${API_BASE_URL}api/column/updateColumn`, {
+  const response = await fetch(`${API_BASE_URL}/api/column/updateColumn`, {
     method: "PATCH",
     credentials: "include",
     headers: {
@@ -215,7 +215,7 @@ export const updateColumn = async (columnId: Id, title: string) => {
 };
 
 export const changePositions = async (orderdColumns: Column[]) => {
-  const response = await fetch(`${API_BASE_URL}api/column/position`, {
+  const response = await fetch(`${API_BASE_URL}/api/column/position`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -231,7 +231,7 @@ export const changePositions = async (orderdColumns: Column[]) => {
 };
 
 export const getTasks = async () => {
-  const response = await fetch(`${API_BASE_URL}api/task/getTasks`, {
+  const response = await fetch(`${API_BASE_URL}/api/task/getTasks`, {
     method: "GET",
     credentials: "include",
   });
@@ -244,7 +244,7 @@ export const getTasks = async () => {
 };
 
 export const createTask = async (columnId: Id, content: string) => {
-  const response = await fetch(`${API_BASE_URL}api/task/createTask`, {
+  const response = await fetch(`${API_BASE_URL}/api/task/createTask`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -261,7 +261,7 @@ export const createTask = async (columnId: Id, content: string) => {
 };
 
 export const updateTask = async (taskId: Id, content: string) => {
-  const response = await fetch(`${API_BASE_URL}api/task/updateTask`, {
+  const response = await fetch(`${API_BASE_URL}/api/task/updateTask`, {
     method: "PATCH",
     credentials: "include",
     headers: {
@@ -278,7 +278,7 @@ export const updateTask = async (taskId: Id, content: string) => {
 };
 
 export const deleteTask = async (taskId: Id) => {
-  const response = await fetch(`${API_BASE_URL}api/task/deleteTask`, {
+  const response = await fetch(`${API_BASE_URL}/api/task/deleteTask`, {
     method: "DELETE",
     credentials: "include",
     headers: {
@@ -292,7 +292,7 @@ export const deleteTask = async (taskId: Id) => {
 };
 
 export const updateTaskColumn = async (taskId: Id, columnId: Id) => {
-  const response = await fetch(`${API_BASE_URL}api/task/updateActiveColumn`, {
+  const response = await fetch(`${API_BASE_URL}/api/task/updateActiveColumn`, {
     method: "PATCH",
     credentials: "include",
     headers: {
@@ -306,7 +306,7 @@ export const updateTaskColumn = async (taskId: Id, columnId: Id) => {
 };
 
 export const getCalenderTasks = async (week: number) => {
-  const response = await fetch(`${API_BASE_URL}api/calenderTask/${week}`, {
+  const response = await fetch(`${API_BASE_URL}/api/calenderTask/${week}`, {
     method: "GET",
     credentials: "include",
   });
@@ -325,7 +325,7 @@ export const createCalenderTask = async (
   week: number,
 ) => {
   const response = await fetch(
-    `${API_BASE_URL}api/calenderTask/createCalenderTask`,
+    `${API_BASE_URL}/api/calenderTask/createCalenderTask`,
     {
       method: "POST",
       credentials: "include",
@@ -347,7 +347,7 @@ export const createCalenderTask = async (
 
 export const deleteCalenderTask = async (taskId: Id) => {
   const response = await fetch(
-    `${API_BASE_URL}api/calenderTask/deleteCalenderTask`,
+    `${API_BASE_URL}/api/calenderTask/deleteCalenderTask`,
     {
       method: "DELETE",
       credentials: "include",
@@ -364,7 +364,7 @@ export const deleteCalenderTask = async (taskId: Id) => {
 };
 export const updateCalenderTask = async (taskId: Id, content: string) => {
   const response = await fetch(
-    `${API_BASE_URL}api/calenderTask/updateCalenderTask`,
+    `${API_BASE_URL}/api/calenderTask/updateCalenderTask`,
     {
       method: "PATCH",
       credentials: "include",
