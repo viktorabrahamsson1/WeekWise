@@ -4,7 +4,8 @@
   "description": "",
   "main": "./src/index.ts",
   "scripts": {
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "start": "ts-node ./src/index.ts"
   },
   "author": "",
   "license": "ISC",
@@ -21,7 +22,6 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.3.0",
     "mongoose": "^8.1.1",
-    "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.9"
   },
   "devDependencies": {
