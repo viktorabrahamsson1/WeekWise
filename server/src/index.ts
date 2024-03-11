@@ -27,6 +27,8 @@ app.use(
   })
 );
 
+app.get("/", (req, res) => res.send("Server is running"));
+
 app.use("/api/auth", authRoutes);
 app.use("/api/createUser", registerUserRoutes);
 app.use("/api/user", userRoutes);
@@ -35,7 +37,7 @@ app.use("/api/column", columnRoutes);
 app.use("/api/task", taskRoutes);
 app.use("/api/calenderTask", calenderTasksRoutes);
 
-const PORT = 9000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on localhost:${PORT}`);
 });
