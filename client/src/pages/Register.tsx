@@ -1,10 +1,11 @@
 import { useMutation, useQueryClient } from "react-query";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import * as apiClient from "../api-client";
+
 import toast from "react-hot-toast";
 import Header from "../components/header/Header";
 import Footer from "../components/Footer";
+import * as apiClient from "../api/api-auth";
 
 export type RegisterFormData = {
   firstName: string;

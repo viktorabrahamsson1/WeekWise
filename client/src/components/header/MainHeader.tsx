@@ -1,4 +1,5 @@
 import { HiBars3 } from "react-icons/hi2";
+
 import User from "./User";
 
 type MainHeaderProps = {

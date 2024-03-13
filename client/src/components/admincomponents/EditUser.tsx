@@ -3,11 +3,11 @@ import { User } from "../../routes/admin routes/Users";
 import { useForm } from "react-hook-form";
 import { ChangeFormData } from "../../routes/ChangeUserInfo";
 import { useMutation, useQueryClient } from "react-query";
-
-import toast from "react-hot-toast";
-import * as apiClient from "../../api-client";
 import { useAppContext } from "../../contexts/AppContext";
 import { useEffect } from "react";
+
+import toast from "react-hot-toast";
+import * as apiClient from "../../api/api-admin";
 
 type EditUserProps = {
   editOpen: boolean;

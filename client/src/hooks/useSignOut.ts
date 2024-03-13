@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
-import * as apiClient from "../api-client";
+import * as apiClient from "../api/api-auth";
 
 export const useSignOut = () => {
   const queryClient = useQueryClient();

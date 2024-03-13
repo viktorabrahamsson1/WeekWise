@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 
-import * as apiClient from "../api-client";
+import * as apiClient from "../api/api-auth";
 import toast from "react-hot-toast";
 import Header from "../components/header/Header";
 import Footer from "../components/Footer";

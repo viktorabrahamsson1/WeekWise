@@ -1,9 +1,10 @@
 import { Navigate, Outlet } from "react-router";
+import { useState } from "react";
+import { useAppContext } from "../contexts/AppContext";
+
 import SideBar from "../components/sidebar/SideBar";
 import MainHeader from "../components/header/MainHeader";
 import SideBarSmall from "../components/sidebar/SideBarSmall";
-import { useState } from "react";
-import { useAppContext } from "../contexts/AppContext";
 import Spinner from "../components/Spinner";
 
 function Layout() {

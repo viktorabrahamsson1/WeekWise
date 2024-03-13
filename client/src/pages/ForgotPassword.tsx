@@ -4,8 +4,8 @@ import { useMutation } from "react-query";
 
 import Footer from "../components/Footer";
 import Header from "../components/header/Header";
-import * as apiClinet from "../api-client";
 import toast from "react-hot-toast";
+import * as apiClinet from "../api/api-user";
 
 export type ForgotPasswordData = {
   email: string;

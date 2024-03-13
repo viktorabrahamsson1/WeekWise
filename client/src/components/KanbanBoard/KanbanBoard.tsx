@@ -18,7 +18,8 @@ import TaskCard from "./TaskCard";
 import Spinner from "../Spinner";
 import toast from "react-hot-toast";
 import PlusIcon from "../icons/PlusIcon";
-import * as apiClient from "../../api-client";
+import * as apiClient from "../../api/api-column";
+import * as apiClientTask from "../../api/api-task";
 
 export type Id = string | number;
 
@@ -59,7 +60,7 @@ function KanbanBoard() {
   });
 
   const { isLoading: isTaskLoading } = useQuery({
-    queryFn: apiClient.getTasks,
+    queryFn: apiClientTask.getTasks,
     queryKey: "tasks",
     onSuccess: (data) => {
       setTasks(data);
@@ -94,7 +95,7 @@ function KanbanBoard() {
   }
 
   function createTask(columnId: Id) {
-    apiClient
+    apiClientTask
       .createTask(columnId, `Task ${tasks.length + 1}`)
       .then((createdTask) => {
         setTasks([...tasks, createdTask]);
@@ -111,10 +112,10 @@ function KanbanBoard() {
   }
 
   const updateTaskDB = (id: Id, content: string) => {
-    apiClient.updateTask(id, content);
+    apiClientTask.updateTask(id, content);
   };
 
-  const { mutate: deleteTASK } = useMutation(apiClient.deleteTask, {
+  const { mutate: deleteTASK } = useMutation(apiClientTask.deleteTask, {
     onSuccess: () => {
       queryClient.invalidateQueries("tasks");
     },
@@ -185,7 +186,7 @@ function KanbanBoard() {
         const overIndex = tasks.findIndex((t) => t._id === overId);
 
         tasks[activeIndex].columnId = tasks[overIndex].columnId;
-        apiClient.updateTaskColumn(
+        apiClientTask.updateTaskColumn(
           tasks[activeIndex]._id,
           tasks[overIndex].columnId,
         );

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import * as apiClient from "../../api-client";
 import { User } from "../../routes/admin routes/Users";
+
 import DashboardUsersToday from "./DashboardUsersToday";
+import * as apiClient from "../../api/api-admin";
 
 function DashboardToday() {
   const [usersToday, setUsersToday] = useState<User[]>([]);

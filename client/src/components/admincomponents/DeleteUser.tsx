@@ -1,7 +1,7 @@
 import { HiOutlineExclamationCircle } from "react-icons/hi2";
 import { User } from "../../routes/admin routes/Users";
 
-import * as apiClient from "../../api-client";
+import * as apiClient from "../../api/api-admin";
 import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "react-query";
 
