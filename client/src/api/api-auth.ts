@@ -50,6 +50,7 @@ export const signOut = async () => {
 
 export const verifyAuthToken = async () => {
   const response = await fetch(`${API_BASE_URL}/api/auth/validate-token`, {
+    method: "GET",
     credentials: "include",
   });
 

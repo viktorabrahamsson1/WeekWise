@@ -5,7 +5,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const adminEditUserInfo = async (formData: AdminChangeFormDataExtra) => {
   const response = await fetch(`${API_BASE_URL}/api/admin/updateUserInfo`, {
-    method: "POST",
+    method: "PATCH",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
@@ -22,7 +22,7 @@ export const adminEditUserInfo = async (formData: AdminChangeFormDataExtra) => {
 
 export const adminDeleteUser = async (user: User) => {
   const response = await fetch(`${API_BASE_URL}/api/admin/deleteUser`, {
-    method: "POST",
+    method: "DELETE",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",

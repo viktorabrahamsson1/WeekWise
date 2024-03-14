@@ -14,7 +14,7 @@ router.get("/getUsers", async (req: Request, res: Response) => {
   return res.status(200).json(allUsers);
 });
 
-router.post("/updateUserInfo", async (req: Request, res: Response) => {
+router.patch("/updateUserInfo", async (req: Request, res: Response) => {
   const { firstName, lastName, email, password, role, originalEmail } =
     req.body;
   try {
@@ -46,7 +46,7 @@ router.post("/updateUserInfo", async (req: Request, res: Response) => {
   }
 });
 
-router.post("/deleteUser", async (req: Request, res: Response) => {
+router.delete("/deleteUser", async (req: Request, res: Response) => {
   await User.deleteOne({ email: req.body.email });
 
   return res.status(200).json({ message: "User deleted" });

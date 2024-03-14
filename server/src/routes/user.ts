@@ -11,7 +11,7 @@ import {
 
 const router = express.Router();
 
-router.post(
+router.patch(
   "/updateUserInfo",
   verifyToken,
   async (req: Request, res: Response) => {
@@ -61,7 +61,7 @@ router.post(
   }
 );
 
-router.post("/forgotPassword", async (req: Request, res: Response) => {
+router.patch("/forgotPassword", async (req: Request, res: Response) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });

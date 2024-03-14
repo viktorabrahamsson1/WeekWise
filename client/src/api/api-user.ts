@@ -5,7 +5,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const editUserInfo = async (formData: ChangeFormData) => {
   const response = await fetch(`${API_BASE_URL}/api/user/updateUserInfo`, {
-    method: "POST",
+    method: "PATCH",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
@@ -24,7 +24,7 @@ export const editUserInfo = async (formData: ChangeFormData) => {
 
 export const forgotPassword = async (formData: ForgotPasswordData) => {
   const response = await fetch(`${API_BASE_URL}/api/user/forgotPassword`, {
-    method: "POST",
+    method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },

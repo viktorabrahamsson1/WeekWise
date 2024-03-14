@@ -37,7 +37,7 @@ app.use("/api/column", columnRoutes);
 app.use("/api/task", taskRoutes);
 app.use("/api/calenderTask", calenderTasksRoutes);
 
-const PORT = process.env.PORT || 7000;
+const PORT = 9000;
 app.listen(PORT, () => {
   console.log(`Server running on localhost:${PORT}`);
 });

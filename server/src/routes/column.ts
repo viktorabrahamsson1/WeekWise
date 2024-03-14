@@ -81,7 +81,7 @@ router.patch(
   }
 );
 
-router.post("/position", verifyToken, async (req: Request, res: Response) => {
+router.patch("/position", verifyToken, async (req: Request, res: Response) => {
   try {
     const orderedColumns = req.body;
 
