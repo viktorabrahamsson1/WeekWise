@@ -23,6 +23,11 @@ const useTask = () => {
     setTasks((tasks) => tasks.filter((task) => task._id !== taskId));
   };
 
+  const completeTask = (taskId: Id) => {
+    apiClient.completeCalenderTask(taskId);
+    setTasks((tasks) => tasks.filter((task) => task._id !== taskId));
+  };
+
   const updateTask = (taskId: Id, content: string) => {
     const newTasks = tasks.map((task) => {
       if (task._id !== taskId) return task;
@@ -35,7 +40,15 @@ const useTask = () => {
     apiClient.updateCalenderTask(taskId, content);
   };
 
-  return { createTask, deleteTask, updateTask, updateTaskDB, tasks, setTasks };
+  return {
+    createTask,
+    deleteTask,
+    updateTask,
+    updateTaskDB,
+    tasks,
+    setTasks,
+    completeTask,
+  };
 };
 
 export default useTask;

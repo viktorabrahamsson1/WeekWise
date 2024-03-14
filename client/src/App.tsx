@@ -18,6 +18,7 @@ import VerifyEmail from "./pages/VerifyEmail";
 import ForgotPassword from "./pages/ForgotPassword";
 import VerifyPassword from "./pages/VerifyPassword";
 import Week from "./components/calender/week/Week";
+import Progress from "./routes/Progress";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Week />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/progress",
+        element: (
+          <ProtectedRoute>
+            <Progress />
           </ProtectedRoute>
         ),
       },

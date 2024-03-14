@@ -4,6 +4,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
 import DeleteIcon from "../icons/DeleteIcon";
+import CheckIcon from "../icons/CheckIcon";
 
 interface Props {
   task: Task;
@@ -101,14 +102,18 @@ function TaskCard({ task, deleteTask, updateTask, updateTaskDB }: Props) {
         {task.content}
       </p>
       {mouseIsOver && (
-        <button
-          onClick={() => {
-            deleteTask(task._id);
-          }}
-          className="absolute right-8 top-1/2 -translate-y-1/2 "
-        >
-          <DeleteIcon />
-        </button>
+        <div className="absolute right-4 top-1/2 flex -translate-y-1/2 items-center gap-2">
+          <button>
+            <CheckIcon />
+          </button>
+          <button
+            onClick={() => {
+              deleteTask(task._id);
+            }}
+          >
+            <DeleteIcon />
+          </button>
+        </div>
       )}
     </div>
   );

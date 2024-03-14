@@ -26,6 +26,18 @@ router.post(
       const { content, day, week } = req.body;
       const task = new calenderTask({ content, day, week, userId: req.userId });
       await task.save();
+
+      const user = await User.findById(req.userId);
+      if (!user) {
+        return res.status(400).json({ message: "No user found" });
+      }
+      const tasks = user.progress.tasks + 1;
+      const completedTasks = user.progress.completedTasks;
+
+      await user.updateOne({
+        progress: { tasks, completedTasks },
+      });
+
       res.status(200).json(task);
     } catch (error) {
       res.status(500).json({ message: "Error creating calender task" });
@@ -40,12 +52,49 @@ router.delete(
     try {
       const { taskId } = req.body;
       await calenderTask.findByIdAndDelete(taskId);
+
+      const user = await User.findById(req.userId);
+      if (!user) {
+        return res.status(400).json({ message: "No user found" });
+      }
+      const tasks = user.progress.tasks - 1;
+      const completedTasks = user.progress.completedTasks;
+
+      await user.updateOne({
+        progress: { tasks, completedTasks },
+      });
       res.status(200).json({ message: "Calender task successfully deleted" });
     } catch (error) {
       res.status(400).json({ message: "Error deleting calender task" });
     }
   }
 );
+
+router.delete(
+  "/completeCalenderTask",
+  verifyToken,
+  async (req: Request, res: Response) => {
+    try {
+      const { taskId } = req.body;
+      await calenderTask.findByIdAndDelete(taskId);
+
+      const user = await User.findById(req.userId);
+      if (!user) {
+        return res.status(400).json({ message: "No user found" });
+      }
+      const tasks = user.progress.tasks;
+      const completedTasks = user.progress.completedTasks + 1;
+
+      await user.updateOne({
+        progress: { tasks, completedTasks },
+      });
+      res.status(200).json({ message: "Calender task successfully deleted" });
+    } catch (error) {
+      res.status(400).json({ message: "Error deleting calender task" });
+    }
+  }
+);
+
 router.patch(
   "/updateCalenderTask",
   verifyToken,
@@ -65,6 +114,27 @@ router.patch(
       res.status(200).json(updatedTask);
     } catch (error) {
       res.status(400).json({ message: "Error deleting calender task" });
+    }
+  }
+);
+
+router.get(
+  "getCompletedTasks",
+  verifyToken,
+  async (req: Request, res: Response) => {
+    try {
+      const user = await User.findById(req.userId);
+      if (!user) {
+        return res.status(400).json({ message: "No user found" });
+      }
+      console.log("HERE");
+
+      res.status(200).json({
+        allTasks: user.progress.tasks,
+        completedTasks: user.progress.completedTasks,
+      });
+    } catch (error) {
+      res.status(400).json({ message: "Error retriving completed tasks" });
     }
   }
 );

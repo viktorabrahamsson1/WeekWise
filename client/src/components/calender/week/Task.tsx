@@ -2,15 +2,23 @@ import { useState } from "react";
 import { Id, TaskItem } from "./Week";
 
 import DeleteIcon from "../../icons/DeleteIcon";
+import CheckIcon from "../../icons/CheckIcon";
 
 interface Props {
   task: TaskItem;
   deleteTask: (_id: Id) => void;
+  completeTask: (_id: Id) => void;
   updateTask: (taskId: string, content: string) => void;
   updateTaskDB: (taskId: string, content: string) => void;
 }
 
-function Task({ task, deleteTask, updateTask, updateTaskDB }: Props) {
+function Task({
+  task,
+  deleteTask,
+  completeTask,
+  updateTask,
+  updateTaskDB,
+}: Props) {
   const [mouseIsOver, setMouseIsOver] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
@@ -60,14 +68,22 @@ function Task({ task, deleteTask, updateTask, updateTaskDB }: Props) {
         {task.content}
       </p>
       {mouseIsOver && (
-        <button
-          onClick={() => {
-            deleteTask(task._id);
-          }}
-          className="absolute right-4 top-1/2 -translate-y-1/2 "
-        >
-          <DeleteIcon />
-        </button>
+        <div className="absolute right-4 top-1/2 flex -translate-y-1/2 items-center gap-2">
+          <button
+            onClick={() => {
+              completeTask(task._id);
+            }}
+          >
+            <CheckIcon />
+          </button>
+          <button
+            onClick={() => {
+              deleteTask(task._id);
+            }}
+          >
+            <DeleteIcon />
+          </button>
+        </div>
       )}
     </div>
   );

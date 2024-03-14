@@ -6,6 +6,7 @@ import {
   HiOutlineCalendarDays,
   HiOutlineUsers,
   HiOutlineChartBarSquare,
+  HiOutlineRocketLaunch,
 } from "react-icons/hi2";
 
 import { Link } from "react-router-dom";
@@ -64,6 +65,19 @@ function SideBarSmall({ isOpen, setIsOpen }: SideBarSmallProps) {
             <HiOutlineCalendarDays
               fontSize={24}
               className="text-slate-600 duration-150 group-hover:text-white dark:text-gray-300"
+            />
+          }
+        />
+        <SideBarLink
+          name="Progress"
+          path="/progress"
+          activeLink={activeLink}
+          handleSetActiveLink={handleSetActiveLink}
+          setIsOpen={setIsOpen}
+          icon={
+            <HiOutlineRocketLaunch
+              fontSize={24}
+              className="text-slate-700 duration-150 group-hover:text-white dark:text-gray-300"
             />
           }
         />

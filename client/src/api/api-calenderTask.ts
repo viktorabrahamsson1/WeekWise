@@ -59,6 +59,25 @@ export const deleteCalenderTask = async (taskId: Id) => {
     throw new Error("Error creating calender task");
   }
 };
+
+export const completeCalenderTask = async (taskId: Id) => {
+  const response = await fetch(
+    `${API_BASE_URL}/api/calenderTask/completeCalenderTask`,
+    {
+      method: "DELETE",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ taskId }),
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error("Error creating calender task");
+  }
+};
+
 export const updateCalenderTask = async (taskId: Id, content: string) => {
   const response = await fetch(
     `${API_BASE_URL}/api/calenderTask/updateCalenderTask`,
@@ -72,6 +91,22 @@ export const updateCalenderTask = async (taskId: Id, content: string) => {
     },
   );
 
+  const body = await response.json();
+
+  if (!response.ok) {
+    throw new Error(body.message);
+  }
+  return body;
+};
+
+export const getCompletedTasks = async () => {
+  const response = await fetch(
+    `${API_BASE_URL}/api/calenderTask/getCompletedTasks`,
+    {
+      method: "GET",
+      credentials: "include",
+    },
+  );
   const body = await response.json();
 
   if (!response.ok) {

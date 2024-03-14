@@ -11,6 +11,7 @@ type WeekProps = {
   tasks: TaskItem[];
   createTask: (week: number, day: string) => void;
   deleteTask: (_id: Id) => void;
+  completeTask: (_id: Id) => void;
   updateTask: (taskId: string, content: string) => void;
   updateTaskDB: (taskId: string, content: string) => void;
 };
@@ -21,6 +22,7 @@ function Day({
   tasks,
   createTask,
   deleteTask,
+  completeTask,
   updateTask,
   updateTaskDB,
 }: WeekProps) {
@@ -39,6 +41,7 @@ function Day({
                 key={task._id}
                 task={task}
                 deleteTask={deleteTask}
+                completeTask={completeTask}
                 updateTask={updateTask}
                 updateTaskDB={updateTaskDB}
               />

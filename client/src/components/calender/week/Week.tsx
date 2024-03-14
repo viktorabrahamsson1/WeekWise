@@ -5,8 +5,8 @@ import { HiArrowUturnLeft } from "react-icons/hi2";
 
 import Day from "./Day";
 import Spinner from "../../Spinner";
-import * as apiClient from "../../../api/api-calenderTask";
 import useTask from "./actions/task";
+import * as apiClient from "../../../api/api-calenderTask";
 
 const days = [
   "Monday",
@@ -28,8 +28,15 @@ export type TaskItem = {
 
 function Week() {
   const { week } = useParams();
-  const { createTask, deleteTask, setTasks, tasks, updateTask, updateTaskDB } =
-    useTask();
+  const {
+    createTask,
+    deleteTask,
+    completeTask,
+    setTasks,
+    tasks,
+    updateTask,
+    updateTaskDB,
+  } = useTask();
 
   const { isLoading } = useQuery({
     queryFn: async () =>
@@ -55,6 +62,7 @@ function Week() {
           tasks={tasks.filter((task) => task.day === day)}
           createTask={createTask}
           deleteTask={deleteTask}
+          completeTask={completeTask}
           updateTask={updateTask}
           updateTaskDB={updateTaskDB}
         />

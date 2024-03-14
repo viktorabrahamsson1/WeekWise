@@ -6,6 +6,7 @@ import {
   HiOutlineEnvelope,
   HiOutlineHome,
   HiOutlinePaperAirplane,
+  HiOutlineRocketLaunch,
   HiOutlineUsers,
 } from "react-icons/hi2";
 
@@ -51,6 +52,19 @@ function SideBar({ setIsOpen }: SideBarSmallProps) {
           setIsOpen={setIsOpen}
           icon={
             <HiOutlineCalendarDays
+              fontSize={24}
+              className="text-slate-700 duration-150 group-hover:text-white dark:text-gray-300"
+            />
+          }
+        />
+        <SideBarLink
+          name="Progress"
+          path="/progress"
+          activeLink={activeLink}
+          handleSetActiveLink={handleSetActiveLink}
+          setIsOpen={setIsOpen}
+          icon={
+            <HiOutlineRocketLaunch
               fontSize={24}
               className="text-slate-700 duration-150 group-hover:text-white dark:text-gray-300"
             />

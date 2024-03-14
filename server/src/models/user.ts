@@ -8,6 +8,7 @@ export type UserType = {
   email: string;
   password: string;
   role: string;
+  progress: { tasks: number; completedTasks: number };
   isVerified: boolean;
   verificationToken: string;
   createdAt: string;
@@ -23,6 +24,11 @@ const userSchema = new mongoose.Schema({
     required: true,
     default: "user",
     enum: ["user", "admin", "superAdmin"],
+  },
+  progress: {
+    type: { tasks: Number, completedTasks: Number },
+    required: true,
+    default: { tasks: 0, completedTasks: 0, inCompletedTasks: 0 },
   },
   isVerified: { type: Boolean, required: true, default: false },
   verificationToken: { type: String },
