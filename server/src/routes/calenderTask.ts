@@ -118,21 +118,17 @@ router.patch(
   }
 );
 
-router.get(
-  "getCompletedTasks",
+router.post(
+  "/getProgress",
   verifyToken,
   async (req: Request, res: Response) => {
     try {
       const user = await User.findById(req.userId);
-      if (!user) {
-        return res.status(400).json({ message: "No user found" });
-      }
-      console.log("HERE");
+      if (!user) return res.status(400).json({ message: "No user found" });
+      const allTasks = user.progress.tasks;
+      const completedTasks = user.progress.completedTasks;
 
-      res.status(200).json({
-        allTasks: user.progress.tasks,
-        completedTasks: user.progress.completedTasks,
-      });
+      res.status(200).json({ allTasks, completedTasks });
     } catch (error) {
       res.status(400).json({ message: "Error retriving completed tasks" });
     }

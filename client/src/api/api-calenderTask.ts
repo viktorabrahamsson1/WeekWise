@@ -99,18 +99,15 @@ export const updateCalenderTask = async (taskId: Id, content: string) => {
   return body;
 };
 
-export const getCompletedTasks = async () => {
-  const response = await fetch(
-    `${API_BASE_URL}/api/calenderTask/getCompletedTasks`,
-    {
-      method: "GET",
-      credentials: "include",
-    },
-  );
+export const lall = async () => {
+  const response = await fetch(`${API_BASE_URL}/api/calenderTask/x`, {
+    method: "GET",
+    credentials: "include",
+  });
+
   const body = await response.json();
 
   if (!response.ok) {
     throw new Error(body.message);
   }
-  return body;
 };

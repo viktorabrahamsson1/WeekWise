@@ -37,13 +37,11 @@ function Task({
           onBlur={() => {
             toggleEditMode();
             updateTaskDB(task._id, task.content);
-            console.log(task.content);
           }}
           onKeyDown={(e) => {
             if (e.key === "Enter" && e.shiftKey) {
               toggleEditMode();
               updateTaskDB(task._id, task.content);
-              console.log(task.content);
             }
           }}
           onChange={(e) => updateTask(task._id, e.target.value)}
