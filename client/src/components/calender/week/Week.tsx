@@ -53,23 +53,28 @@ function Week() {
   }
 
   return (
-    <div className="relative flex flex-wrap justify-center gap-4">
-      {days.map((day) => (
-        <Day
-          key={day}
-          week={+week}
-          day={day}
-          tasks={tasks.filter((task) => task.day === day)}
-          createTask={createTask}
-          deleteTask={deleteTask}
-          completeTask={completeTask}
-          updateTask={updateTask}
-          updateTaskDB={updateTaskDB}
-        />
-      ))}
-      <Link to="/calender">
-        <HiArrowUturnLeft className="absolute left-[-0.5rem] top-[-3rem] size-8 cursor-pointer duration-100 hover:text-gray-800 dark:hover:text-gray-400" />
-      </Link>
+    <div className="flex flex-col  gap-6">
+      <div className="flex items-center gap-4 ">
+        <Link to="/calender">
+          <HiArrowUturnLeft className=" size-8 cursor-pointer duration-100 hover:text-gray-800 dark:hover:text-gray-400" />
+        </Link>
+        <h2 className="text-2xl font-semibold">Week: {week}</h2>
+      </div>
+      <div className="relative flex flex-wrap justify-center gap-4">
+        {days.map((day) => (
+          <Day
+            key={day}
+            week={+week}
+            day={day}
+            tasks={tasks.filter((task) => task.day === day)}
+            createTask={createTask}
+            deleteTask={deleteTask}
+            completeTask={completeTask}
+            updateTask={updateTask}
+            updateTaskDB={updateTaskDB}
+          />
+        ))}
+      </div>
     </div>
   );
 }

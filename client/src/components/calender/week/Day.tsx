@@ -33,6 +33,7 @@ function Day({
       <div className=" flex h-[500px] max-h-[500px] w-[250px] flex-col rounded-md bg-indigo-100 dark:bg-slate-600">
         <div className="flex h-[60px] items-center justify-between rounded-md rounded-b-none border-2 border-indigo-100 bg-indigo-200 p-3 text-lg font-bold dark:border-slate-600 dark:bg-slate-700">
           <span>{day}</span>
+          <span className="text-sm font-normal">1 / {week}</span>
         </div>
         <div className="flex flex-grow flex-col gap-4 overflow-y-auto overflow-x-hidden p-2">
           <SortableContext items={tasksIds}>
