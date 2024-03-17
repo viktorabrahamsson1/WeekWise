@@ -27,6 +27,8 @@ app.use(
   })
 );
 
+app.get("/", (req, res) => res.send("Server is working"));
+
 app.use("/api/auth", authRoutes);
 app.use("/api/createUser", registerUserRoutes);
 app.use("/api/user", userRoutes);
