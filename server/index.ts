@@ -4,15 +4,15 @@ import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import "dotenv/config";
 
-import "./models";
+import "./src/models";
 
-import registerUserRoutes from "./routes/createUsers";
-import authRoutes from "./routes/auth";
-import userRoutes from "./routes/user";
-import adminRoutes from "./routes/admin";
-import columnRoutes from "./routes/column";
-import taskRoutes from "./routes/task";
-import calenderTasksRoutes from "./routes/calenderTask";
+import registerUserRoutes from "./src/routes/createUsers";
+import authRoutes from "./src/routes/auth";
+import userRoutes from "./src/routes/user";
+import adminRoutes from "./src/routes/admin";
+import columnRoutes from "./src/routes/column";
+import taskRoutes from "./src/routes/task";
+import calenderTasksRoutes from "./src/routes/calenderTask";
 
 mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string);
 
