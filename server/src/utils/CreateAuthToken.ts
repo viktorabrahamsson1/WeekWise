@@ -19,7 +19,7 @@ const createAuthToken = (req: Request, res: Response, user: UserType) => {
   );
 
   res.cookie("auth_token", token, {
-    httpOnly: true,
+    httpOnly: false,
     secure: true,
     maxAge: 86400000,
   });
