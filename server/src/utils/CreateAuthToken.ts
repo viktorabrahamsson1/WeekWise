@@ -20,7 +20,7 @@ const createAuthToken = (req: Request, res: Response, user: UserType) => {
 
   res.cookie("auth_token", token, {
     httpOnly: true,
-    secure: false,
+    secure: process.env.NODE_ENV === "production",
     path: "/",
     maxAge: 86400000,
   });
