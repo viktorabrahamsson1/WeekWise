@@ -33,7 +33,6 @@ function ForgotPassword() {
   });
 
   const onSubmit = handleSubmit((formData) => {
-    console.log(formData);
     mutation.mutate(formData);
   });
   return (
