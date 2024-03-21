@@ -20,11 +20,6 @@ const app = express();
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(
-  cors({
-    credentials: true,
-  })
-);
 
 app.get("/", (req, res) => res.send("Server is working"));
 
