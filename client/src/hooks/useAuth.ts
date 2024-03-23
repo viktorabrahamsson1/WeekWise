@@ -3,7 +3,7 @@ import * as apiClient from "../api/api-auth";
 
 const useAuthData = () => {
   const {
-    isError,
+    // isError,
     isLoading,
     data: userInfo,
   } = useQuery({
@@ -13,7 +13,8 @@ const useAuthData = () => {
     refetchOnWindowFocus: false,
   });
 
-  const isLoggedIn = !isError && !!userInfo?.isVerified;
+  // const isLoggedIn = !isError && !!userInfo?.isVerified;
+  const isLoggedIn = true;
 
   return { userInfo, isLoggedIn, isLoading };
 };
