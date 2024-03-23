@@ -1,6 +1,4 @@
 import {
-  HiOutlineEnvelope,
-  HiOutlinePaperAirplane,
   HiXMark,
   HiOutlineHome,
   HiOutlineCalendarDays,
@@ -81,7 +79,7 @@ function SideBarSmall({ isOpen, setIsOpen }: SideBarSmallProps) {
             />
           }
         />
-        <SideBarLink
+        {/* <SideBarLink
           name="Send"
           path="/send"
           activeLink={activeLink}
@@ -106,7 +104,7 @@ function SideBarSmall({ isOpen, setIsOpen }: SideBarSmallProps) {
               className="text-slate-600 duration-150 group-hover:text-white dark:text-gray-300"
             />
           }
-        />
+        /> */}
 
         {userInfo.userRole === "superAdmin" && (
           <SideBarLink
