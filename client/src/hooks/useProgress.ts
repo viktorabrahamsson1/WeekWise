@@ -6,25 +6,6 @@ const useProgress = () => {
   const [allTasks, setAllTaskss] = useState(0);
   const [allCompletedTasks, setAllCompeltedTasks] = useState(0);
 
-  const fetchProgressData = async () => {
-    try {
-      const response = await fetch(
-        `${API_BASE_URL}/api/calenderTask/getProgress`,
-        {
-          method: "POST",
-          credentials: "include",
-        },
-      );
-      const body = await response.json();
-      const { allTasks, completedTasks } = body;
-      //setAllTaskss(allTasks);
-      //setAllCompeltedTasks(completedTasks);
-      if (!response.ok) throw new Error(body.message);
-    } catch (error) {
-      console.error("Error fetching progress data:", error);
-    }
-  };
-
   const testprogress = async () => {
     try {
       const response = await fetch(
@@ -47,14 +28,11 @@ const useProgress = () => {
     queryFn: async () => testprogress(),
     queryKey: "progress",
     onSuccess: () => {
-      console.log(data);
       if (!data) return;
       setAllTaskss(data.allTasks);
       setAllCompeltedTasks(data.completedTasks);
     },
   });
-
-  fetchProgressData();
 
   return { allTasks, allCompletedTasks };
 };
