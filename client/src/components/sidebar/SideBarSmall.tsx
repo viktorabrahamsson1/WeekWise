@@ -79,33 +79,6 @@ function SideBarSmall({ isOpen, setIsOpen }: SideBarSmallProps) {
             />
           }
         />
-        {/* <SideBarLink
-          name="Send"
-          path="/send"
-          activeLink={activeLink}
-          handleSetActiveLink={handleSetActiveLink}
-          setIsOpen={setIsOpen}
-          icon={
-            <HiOutlinePaperAirplane
-              fontSize={24}
-              className="text-slate-600 duration-150 group-hover:text-white dark:text-gray-300"
-            />
-          }
-        />
-        <SideBarLink
-          name="Retrived"
-          path="/retrived"
-          activeLink={activeLink}
-          handleSetActiveLink={handleSetActiveLink}
-          setIsOpen={setIsOpen}
-          icon={
-            <HiOutlineEnvelope
-              fontSize={24}
-              className="text-slate-600 duration-150 group-hover:text-white dark:text-gray-300"
-            />
-          }
-        /> */}
-
         {userInfo.userRole === "superAdmin" && (
           <SideBarLink
             name="Users"

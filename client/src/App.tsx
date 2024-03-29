@@ -12,8 +12,6 @@ import ChangeUserInfo from "./routes/ChangeUserInfo";
 import Users from "./routes/admin routes/Users";
 import Dashboard from "./routes/admin routes/Dashboard";
 import Calender from "./routes/Calender";
-// import Send from "./routes/Send";
-// import Retrived from "./routes/Retrived";
 import VerifyEmail from "./pages/VerifyEmail";
 import ForgotPassword from "./pages/ForgotPassword";
 import VerifyPassword from "./pages/VerifyPassword";
@@ -56,22 +54,6 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-      // {
-      //   path: "/send",
-      //   element: (
-      //     <ProtectedRoute>
-      //       <Send />
-      //     </ProtectedRoute>
-      //   ),
-      // },
-      // {
-      //   path: "/retrived",
-      //   element: (
-      //     <ProtectedRoute>
-      //       <Retrived />
-      //     </ProtectedRoute>
-      //   ),
-      // },
       {
         path: "/user",
         element: (
