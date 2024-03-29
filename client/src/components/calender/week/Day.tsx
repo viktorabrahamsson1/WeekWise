@@ -1,9 +1,8 @@
-import { SortableContext } from "@dnd-kit/sortable";
-import { useMemo } from "react";
 import { Id, TaskItem } from "./Week";
 
 import Task from "./Task";
 import PlusIcon from "../../icons/PlusIcon";
+import { useQueryClient } from "react-query";
 
 type WeekProps = {
   week: number;
@@ -26,7 +25,7 @@ function Day({
   updateTask,
   updateTaskDB,
 }: WeekProps) {
-  const tasksIds = useMemo(() => tasks.map((task) => task._id), [tasks]);
+  const queryClient = useQueryClient();
 
   return (
     <div>
@@ -36,22 +35,21 @@ function Day({
           <span className="text-sm font-normal">1 / {week}</span>
         </div>
         <div className="flex flex-grow flex-col gap-4 overflow-y-auto overflow-x-hidden p-2">
-          <SortableContext items={tasksIds}>
-            {tasks.map((task) => (
-              <Task
-                key={task._id}
-                task={task}
-                deleteTask={deleteTask}
-                completeTask={completeTask}
-                updateTask={updateTask}
-                updateTaskDB={updateTaskDB}
-              />
-            ))}
-          </SortableContext>
+          {tasks.map((task) => (
+            <Task
+              key={task._id}
+              task={task}
+              deleteTask={deleteTask}
+              completeTask={completeTask}
+              updateTask={updateTask}
+              updateTaskDB={updateTaskDB}
+            />
+          ))}
         </div>
         <button
           onClick={() => {
             createTask(week, day);
+            queryClient.invalidateQueries("progress");
           }}
           className="flex items-center border-t-2 border-indigo-200 p-4 hover:bg-indigo-200 hover:text-gray-900 active:bg-slate-600 dark:border-slate-800 dark:hover:bg-slate-700 dark:hover:text-indigo-300"
         >

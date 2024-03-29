@@ -99,15 +99,20 @@ export const updateCalenderTask = async (taskId: Id, content: string) => {
   return body;
 };
 
-export const lall = async () => {
-  const response = await fetch(`${API_BASE_URL}/api/calenderTask/x`, {
-    method: "GET",
-    credentials: "include",
-  });
+export const getProgress = async () => {
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/api/calenderTask/getProgress`,
+      {
+        method: "POST",
+        credentials: "include",
+      },
+    );
+    const body = await response.json();
+    if (!response.ok) throw new Error(body.message);
 
-  const body = await response.json();
-
-  if (!response.ok) {
-    throw new Error(body.message);
+    return body;
+  } catch (error) {
+    throw new Error("Error getting progress");
   }
 };

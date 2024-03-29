@@ -80,6 +80,7 @@ function Task({
           <button
             onClick={() => {
               deleteTask(task._id);
+              queryClient.invalidateQueries("progress");
             }}
           >
             <DeleteIcon />

@@ -1,7 +1,6 @@
 import { HiBars3 } from "react-icons/hi2";
 
 import User from "./User";
-import Score from "./Score";
 
 type MainHeaderProps = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,7 +16,6 @@ function MainHeader({ setIsOpen }: MainHeaderProps) {
           cursor="pointer"
           className="duration-150 hover:text-slate-600 dark:text-gray-300 dark:hover:text-gray-600 lg:hidden"
         />
-        <Score />
         <User />
       </div>
     </header>
