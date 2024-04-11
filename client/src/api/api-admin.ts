@@ -53,7 +53,10 @@ export const adminGetUsersToday = async (date: string): Promise<User[]> => {
 };
 
 export const getUsers = async () => {
-  const response = await fetch(`${API_BASE_URL}/api/admin/getUsers`);
+  const response = await fetch(`${API_BASE_URL}/api/admin/getUsers`, {
+    method: "GET",
+    credentials: "include",
+  });
 
   const body = await response.json();
 
