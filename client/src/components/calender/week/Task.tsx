@@ -3,6 +3,7 @@ import { Id, TaskItem } from "./Week";
 
 import DeleteIcon from "../../icons/DeleteIcon";
 import CheckIcon from "../../icons/CheckIcon";
+import { useQueryClient } from "react-query";
 
 interface Props {
   task: TaskItem;
@@ -21,6 +22,7 @@ function Task({
 }: Props) {
   const [mouseIsOver, setMouseIsOver] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const queryClient = useQueryClient();
 
   const toggleEditMode = () => {
     setEditMode((prev) => !prev);
@@ -70,6 +72,7 @@ function Task({
           <button
             onClick={() => {
               completeTask(task._id);
+              queryClient.invalidateQueries("progress");
             }}
           >
             <CheckIcon />
@@ -77,6 +80,7 @@ function Task({
           <button
             onClick={() => {
               deleteTask(task._id);
+              queryClient.invalidateQueries("progress");
             }}
           >
             <DeleteIcon />

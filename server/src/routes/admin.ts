@@ -4,7 +4,7 @@ import verifyAdmin from "../middleware/verifyAdmin";
 
 const router = express.Router();
 
-router.get("/getUsers", verifyAdmin, async (req: Request, res: Response) => {
+router.get("/getUsers", async (req: Request, res: Response) => {
   const filter = {};
   const allUsers = await User.find(filter);
 
