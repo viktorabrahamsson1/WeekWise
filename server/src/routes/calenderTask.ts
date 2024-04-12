@@ -1,11 +1,11 @@
 import express, { Request, Response } from "express";
 import calenderTask from "../models/calenderTask";
 import User from "../models/user";
-import verifyToken from "../middleware/verifyAuthToken";
+import checkAuth from "../middleware/checkAuth";
 
 const router = express.Router();
 
-router.get("/:week", verifyToken, async (req: Request, res: Response) => {
+router.get("/:week", checkAuth("user"), async (req: Request, res: Response) => {
   try {
     const week = parseInt(req.params.week);
     const tasks = await calenderTask.find({ week, userId: req.userId });
@@ -20,7 +20,7 @@ router.get("/:week", verifyToken, async (req: Request, res: Response) => {
 
 router.post(
   "/createCalenderTask",
-  verifyToken,
+  checkAuth("user"),
   async (req: Request, res: Response) => {
     try {
       const { content, day, week } = req.body;
@@ -42,12 +42,12 @@ router.post(
     } catch (error) {
       res.status(500).json({ message: "Error creating calender task" });
     }
-  }
+  },
 );
 
 router.delete(
   "/deleteCalenderTask",
-  verifyToken,
+  checkAuth("user"),
   async (req: Request, res: Response) => {
     try {
       const { taskId } = req.body;
@@ -67,12 +67,12 @@ router.delete(
     } catch (error) {
       res.status(400).json({ message: "Error deleting calender task" });
     }
-  }
+  },
 );
 
 router.delete(
   "/completeCalenderTask",
-  verifyToken,
+  checkAuth("user"),
   async (req: Request, res: Response) => {
     try {
       const { taskId } = req.body;
@@ -92,19 +92,19 @@ router.delete(
     } catch (error) {
       res.status(400).json({ message: "Error deleting calender task" });
     }
-  }
+  },
 );
 
 router.patch(
   "/updateCalenderTask",
-  verifyToken,
+  checkAuth("user"),
   async (req: Request, res: Response) => {
     try {
       const { taskId, content } = req.body;
       const updatedTask = await calenderTask.findByIdAndUpdate(
         taskId,
         { $set: { content: content } },
-        { new: true }
+        { new: true },
       );
 
       if (!updatedTask) {
@@ -115,12 +115,12 @@ router.patch(
     } catch (error) {
       res.status(400).json({ message: "Error deleting calender task" });
     }
-  }
+  },
 );
 
 router.post(
   "/getProgress",
-  verifyToken,
+  checkAuth("user"),
   async (req: Request, res: Response) => {
     try {
       const user = await User.findById(req.userId);
@@ -132,7 +132,7 @@ router.post(
     } catch (error) {
       res.status(400).json({ message: "Error retriving completed tasks" });
     }
-  }
+  },
 );
 
 export default router;

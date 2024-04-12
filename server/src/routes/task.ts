@@ -1,40 +1,48 @@
 import express, { Request, Response } from "express";
 import Task from "../models/task";
-import verifyToken from "../middleware/verifyAuthToken";
+import checkAuth from "../middleware/checkAuth";
 
 const router = express.Router();
 
-router.get("/getTasks", verifyToken, async (req: Request, res: Response) => {
-  try {
-    const tasks = await Task.find({ userId: req.userId });
+router.get(
+  "/getTasks",
+  checkAuth("user"),
+  async (req: Request, res: Response) => {
+    try {
+      const tasks = await Task.find({ userId: req.userId });
 
-    res.status(200).json(tasks);
-  } catch (error) {
-    res.status(200).json({ message: "Error gettings tasks" });
-  }
-});
+      res.status(200).json(tasks);
+    } catch (error) {
+      res.status(200).json({ message: "Error gettings tasks" });
+    }
+  },
+);
 
-router.post("/createTask", verifyToken, async (req: Request, res: Response) => {
-  try {
-    const { columnId, content } = req.body;
+router.post(
+  "/createTask",
+  checkAuth("user"),
+  async (req: Request, res: Response) => {
+    try {
+      const { columnId, content } = req.body;
 
-    const task = new Task({
-      columnId,
-      userId: req.userId,
-      content,
-    });
+      const task = new Task({
+        columnId,
+        userId: req.userId,
+        content,
+      });
 
-    await task.save();
+      await task.save();
 
-    res.status(200).json(task);
-  } catch (error) {
-    res.status(200).json({ message: "Error creating task" });
-  }
-});
+      res.status(200).json(task);
+    } catch (error) {
+      res.status(200).json({ message: "Error creating task" });
+    }
+  },
+);
 
 router.patch(
   "/updateTask",
-  verifyToken,
+  checkAuth("user"),
   async (req: Request, res: Response) => {
     try {
       const { taskId, content } = req.body;
@@ -49,12 +57,12 @@ router.patch(
     } catch (error) {
       res.status(200).json({ message: "Error updating task" });
     }
-  }
+  },
 );
 
 router.delete(
   "/deleteTask",
-  verifyToken,
+  checkAuth("user"),
   async (req: Request, res: Response) => {
     try {
       const { taskId } = req.body;
@@ -64,12 +72,12 @@ router.delete(
     } catch (error) {
       res.status(200).json({ message: "Error deleting task" });
     }
-  }
+  },
 );
 
 router.patch(
   "/updateActiveColumn",
-  verifyToken,
+  checkAuth("user"),
   async (req: Request, res: Response) => {
     try {
       const { taskId, columnId } = req.body;
@@ -85,7 +93,7 @@ router.patch(
     } catch (error) {
       res.status(400).json({ message: "Error updating task position" });
     }
-  }
+  },
 );
 
 export default router;
