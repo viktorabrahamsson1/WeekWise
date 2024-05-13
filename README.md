@@ -1,8 +1,8 @@
-### Fullstack productivity + calender app with the mern stack
+# Fullstack productivity + calender app with the mern stack
 
 ## Server (node, express, mongodb)
 
-# index.ts
+### index.ts
 
 ```
 mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string);
@@ -44,7 +44,7 @@ Sen defineras de olika routarna med dess respektive route fil.
 
 servern skapas med express() och vi väljer en port 9000 för att lyssna för requests.
 
-# Modeler
+### Modeler
 
 ```
 const userSchema = new mongoose.Schema({
@@ -72,7 +72,7 @@ const userSchema = new mongoose.Schema({
 Här skapar jag ett användar schema som innehåller de properties som varje användar document ska innehålla som ex: namn,email och lösenord osv.
 Schemat innehåller även vilken roll använderen har och vilken typ alla properties ska vara.
 
-# Middleware
+### Middleware
 
 ```
 userSchema.pre("save", async function (next) {
@@ -115,7 +115,7 @@ Om det finns en token så decodar vi cookien som innehåller data som signerats 
 request objektet så att datan går att komma åt senare i endpointen. Sist kallas next funktionen så resterande middlwares kallas.
 I catch blocket hamnar vi om något gick fel (error).
 
-# Config
+### Config
 
 ```
 import nodemailer from "nodemailer";
@@ -135,7 +135,7 @@ export default transporter;
 Här configurerar jag nodemailer (npm paket) så att sidan kan skicka mail vid behov. Här skriver jag endast in vilken service gmail i detta fall samt inloggningen till
 mail adressen som jag får från mina miljö variablar så att den informationen inte är synlig i koden.
 
-# Utils
+### Utils
 
 ```
 const createAuthToken = (req: Request, res: Response, user: UserType) => {
@@ -192,7 +192,7 @@ export const sendVerificationEmail = (email: string, token: string) => {
 Här här jag en till funktion i min utils map som hör samman med nodemailer configurationen. Här använder jag transporten som skapades i configen och skickar
 ett mail med den services + inloggningen samt mailOptions objetket med behövliga properties som jag skapade i funktionen.
 
-# Routes
+### Routes
 
 ```
 router.post(
