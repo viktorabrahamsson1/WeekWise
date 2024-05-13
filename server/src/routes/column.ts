@@ -1,25 +1,29 @@
 import express, { Request, Response } from "express";
 import Column from "../models/column";
 import Task from "../models/task";
-import verifyToken from "../middleware/verifyAuthToken";
+import checkAuth from "../middleware/checkAuth";
 
 const router = express.Router();
 
-router.get("/getColumns", verifyToken, async (req: Request, res: Response) => {
-  try {
-    const columns = await Column.find({ userId: req.userId })
-      .sort("position")
-      .populate("tasks");
-    return res.json(columns);
-  } catch (error) {
-    console.error(error);
-    res.status(400).json({ message: "Error getting columns" });
-  }
-});
+router.get(
+  "/getColumns",
+  checkAuth("user"),
+  async (req: Request, res: Response) => {
+    try {
+      const columns = await Column.find({ userId: req.userId })
+        .sort("position")
+        .populate("tasks");
+      return res.json(columns);
+    } catch (error) {
+      console.error(error);
+      res.status(400).json({ message: "Error getting columns" });
+    }
+  },
+);
 
 router.post(
   "/createColumn",
-  verifyToken,
+  checkAuth("user"),
   async (req: Request, res: Response) => {
     try {
       const { columns } = req.body;
@@ -35,11 +39,12 @@ router.post(
       console.error(error);
       res.status(400).json({ message: "Error creating column" });
     }
-  }
+  },
 );
 
 router.delete(
   "/deleteColumn/:columnId",
+  checkAuth("user"),
   async (req: Request, res: Response) => {
     const { columnId } = req.params;
     try {
@@ -54,19 +59,19 @@ router.delete(
       console.error(error);
       res.status(400).json({ message: "Error deleting column" });
     }
-  }
+  },
 );
 
 router.patch(
   "/updateColumn",
-  verifyToken,
+  checkAuth("user"),
   async (req: Request, res: Response) => {
     const { columnId, title } = req.body;
     try {
       const updatedColumn = await Column.findByIdAndUpdate(
         columnId,
         { $set: { title: title } },
-        { new: true }
+        { new: true },
       );
 
       if (!updatedColumn) {
@@ -78,33 +83,37 @@ router.patch(
       console.error(error);
       res.status(401).json({ message: "Error updating column" });
     }
-  }
+  },
 );
 
-router.patch("/position", verifyToken, async (req: Request, res: Response) => {
-  try {
-    const orderedColumns = req.body;
+router.patch(
+  "/position",
+  checkAuth("user"),
+  async (req: Request, res: Response) => {
+    try {
+      const orderedColumns = req.body;
 
-    await Promise.all(
-      orderedColumns.map(
-        (column: { _id: string; position: number }, index: number) =>
-          Column.findByIdAndUpdate(
-            column._id,
-            { position: index },
-            { new: true }
-          ).exec()
-      )
-    );
+      await Promise.all(
+        orderedColumns.map(
+          (column: { _id: string; position: number }, index: number) =>
+            Column.findByIdAndUpdate(
+              column._id,
+              { position: index },
+              { new: true },
+            ).exec(),
+        ),
+      );
 
-    const updatedColumns = await Column.find({ userId: req.userId })
-      .sort("position")
-      .populate("tasks");
+      const updatedColumns = await Column.find({ userId: req.userId })
+        .sort("position")
+        .populate("tasks");
 
-    res.status(200).json(updatedColumns);
-  } catch (error) {
-    console.error(error);
-    res.status(400).json({ message: "Error updating positions" });
-  }
-});
+      res.status(200).json(updatedColumns);
+    } catch (error) {
+      console.error(error);
+      res.status(400).json({ message: "Error updating positions" });
+    }
+  },
+);
 
 export default router;

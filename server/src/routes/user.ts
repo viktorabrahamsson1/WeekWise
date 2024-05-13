@@ -1,5 +1,4 @@
 import express, { Request, Response } from "express";
-import verifyToken from "../middleware/verifyAuthToken";
 import User from "../models/user";
 import createAuthToken from "../utils/CreateAuthToken";
 import crypto from "crypto";
@@ -8,12 +7,13 @@ import {
   sendVerificationEmail,
   sendVerificationPassword,
 } from "../utils/sendVerificationEmail ";
+import checkAuth from "../middleware/checkAuth";
 
 const router = express.Router();
 
 router.patch(
   "/updateUserInfo",
-  verifyToken,
+  checkAuth("user"),
   async (req: Request, res: Response) => {
     const { firstName, lastName, email, password } = req.body;
     try {
@@ -58,7 +58,7 @@ router.patch(
     } catch (error) {
       console.error(error);
     }
-  }
+  },
 );
 
 router.patch("/forgotPassword", async (req: Request, res: Response) => {
@@ -77,7 +77,7 @@ router.patch("/forgotPassword", async (req: Request, res: Response) => {
       process.env.JWT_SECRET_KEY as string,
       {
         expiresIn: "1d",
-      }
+      },
     );
 
     sendVerificationPassword(email, passwordToken);
@@ -95,7 +95,7 @@ router.get(
     try {
       const decoded = jwt.verify(
         passwordToken,
-        process.env.JWT_SECRET_KEY as string
+        process.env.JWT_SECRET_KEY as string,
       );
       const email = (decoded as JwtPayload).email;
       const password = (decoded as JwtPayload).password;
@@ -111,7 +111,7 @@ router.get(
     } catch (error) {
       console.error(error);
     }
-  }
+  },
 );
 
 export default router;

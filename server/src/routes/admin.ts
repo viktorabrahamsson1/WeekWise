@@ -1,23 +1,27 @@
 import express, { Request, Response } from "express";
 import User from "../models/user";
-import verifyAdmin from "../middleware/verifyAdmin";
+import checkAuth from "../middleware/checkAuth";
 
 const router = express.Router();
 
-router.get("/getUsers", async (req: Request, res: Response) => {
-  const filter = {};
-  const allUsers = await User.find(filter);
+router.get(
+  "/getUsers",
+  checkAuth("superAdmin"),
+  async (_: Request, res: Response) => {
+    const filter = {};
+    const allUsers = await User.find(filter);
 
-  if (!allUsers) {
-    return res.status(400).json({ message: "No users found" });
-  }
+    if (!allUsers) {
+      return res.status(400).json({ message: "No users found" });
+    }
 
-  return res.status(200).json(allUsers);
-});
+    return res.status(200).json(allUsers);
+  },
+);
 
 router.patch(
   "/updateUserInfo",
-  verifyAdmin,
+  checkAuth("superAdmin"),
   async (req: Request, res: Response) => {
     const { firstName, lastName, email, password, role, originalEmail } =
       req.body;
@@ -48,22 +52,22 @@ router.patch(
     } catch (err) {
       console.log(err);
     }
-  }
+  },
 );
 
 router.delete(
   "/deleteUser",
-  verifyAdmin,
+  checkAuth("superAdmin"),
   async (req: Request, res: Response) => {
     await User.deleteOne({ email: req.body.email });
 
     return res.status(200).json({ message: "User deleted" });
-  }
+  },
 );
 
 router.get(
   "/getUserToday/:date",
-  verifyAdmin,
+  checkAuth("superAdmin"),
   async (req: Request, res: Response) => {
     const { date } = req.params;
     const filter = { createdAt: date };
@@ -74,7 +78,7 @@ router.get(
     }
 
     return res.status(200).json(users);
-  }
+  },
 );
 
 export default router;
