@@ -186,7 +186,7 @@ Innti utils mapen så har jag kod som återanvänds på flera ställen så att j
 så skapas den token som jag skrev om innan (auth_token). Här använder jag mig av jwt återigen för att embeda data i denna token så
 att den senare kan kommas åt vid behov. Som andra argument av denna sign funktionen så matar jag in den nyckel som är "ansvarig" för
 denna token så att man bara kan komma åt denna data om man har denna nyckel, vilket ökar säkerheten. Sista argumentet i sign funktionen
-är ett objekt som man kan definera olika valmöjligheter för tokenen, vilket i detta fall ändast är livslängden (1dag).
+är ett objekt som man kan definera olika valmöjligheter för tokenen, vilket i detta fall ändast är livslängden (1 dag).
 
 ```
 export const sendVerificationEmail = (email: string, token: string) => {
@@ -210,8 +210,10 @@ export const sendVerificationEmail = (email: string, token: string) => {
 };
 ```
 
-Här här jag en till funktion i min utils map som hör samman med nodemailer configurationen. Här använder jag transporten som skapades i
-configen och skickar ett mail med den servicen + inloggningen samt mailOptions objetket med behövliga properties som jag skapade i funktionen.
+Här är ännu en funktion i min utlis map som står för att skicka ut mail. Eftersom det på olika ställen i applicationen behövs mail utskickad
+så har jag skrivit en generell funktion för det. Här använder jag mig av nodemailer och har följt deras allmäna struktur för vad som behövs
+för att skicka ut mail. Vilket är ett objekt med nödvändig information angående mailet och sedan transportern som tar hand om att
+faktiskt skicka mailet med den information som tidigare definerats.
 
 ### Routes
 
@@ -259,10 +261,12 @@ router.post(
 );
 ```
 
-Här skapar jag en login route där jag först använder mig av check funktione från express validator paketet för att kolla om det
-är en email och att lösenordets längd är tillräcklig. Sedan kollar jag om jag fick något error från check funktionerna med
-validationResult funktionen. Sen tas emailen och lösenordet från requesten och kollar om det finns något konto med den mailen,
-om inte retunerar vi med ett meddelande "invalide credentials". Om emailen finns kollar vi om den är verifierad och om inte händer
-samma sak som innan. Sen använder vi bcrypt paketet för att kolla om lösenordet vi fick från requesten matchar med lösenordet från
-databasen, ifall det inte matchar blir det ännu ett "invalid credentials". Om allt matchar så skapas en token och en cookie skickas
-med responsen som vi tidgare sätt, samt ett meddelande som säger att allt gick bra.
+Sedan har jag en routes map som innehåller mer eller mindre all funktionalitet på sidan. I varje route fil så finns alla endpoints
+relaterade till varandra som exempel: autentisering. Just denna endpoint är lokaliserad i en route kallad auth. I denna route finns
+denna endpointen där jag använder mig av check funktionen från express validator paketet för att kolla om det är en email och att
+lösenordets längd är tillräcklig. Sedan kollar jag om jag fick något error från check funktionerna med validationResult funktionen.
+Sen tas emailen och lösenordet från requesten och kollar om det finns något konto med den mailen, om inte retunerar vi med ett meddelande
+"invalide credentials". Om emailen finns kollar vi om den är verifierad och om inte händer samma sak som innan. Sen använder jag bcrypt
+paketet för att kolla om lösenordet vi fick från requesten matchar med lösenordet från databasen, ifall det inte matchar blir det ännu
+ett "invalid credentials". Om allt matchar så skapas en token och en cookie skickas med responsen som vi tidgare sett, samt en
+statuskod och meddelande som säger att allt gick bra.
