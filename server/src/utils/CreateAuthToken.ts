@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { UserType } from "../models/user";
 
-const createAuthToken = (req: Request, res: Response, user: UserType) => {
+const createAuthToken = (_: Request, res: Response, user: UserType) => {
   const token = jwt.sign(
     {
       userId: user.id,
@@ -15,7 +15,7 @@ const createAuthToken = (req: Request, res: Response, user: UserType) => {
     process.env.JWT_SECRET_KEY as string,
     {
       expiresIn: "1d",
-    }
+    },
   );
 
   res.cookie("auth_token", token, {

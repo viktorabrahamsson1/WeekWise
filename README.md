@@ -36,11 +36,19 @@ app.listen(PORT, () => {
 
 I index.ts connectar jag men databasen (mongodb) samt olika middlewares för säkerhet och enklare utveckling.
 
+Jag använder mig ofta utav miljövariablar som jag kommer åt via process.env.[variabel namn] för att inte låta viktig information
+såsom inloggningar vara synliga i koden så att någon kan komma åt den.
+
+Jag skapar själva servern med express() functionen som jag sedan använder listen metoden på så att servern kommer lyssna på en
+specifik port.
+
+De primära middlewarsen som jag använder mig utav är dessa:
 cookieparser: för att enklare hantera cookies.
 json: för att enklare arbeta med json data.
 cors: för säkerhet - endast tillåta requests från en url (frontend urlen)
 
-Sen defineras de olika routarna med dess respektive route fil.
+Sen defineras de olika routarna med dess respektive route fil. Detta gör jag eftersom jag vill strukturera upp kod och separera
+koden så tillhörande kod finns i samma fil.
 
 servern skapas med express() och vi väljer en port 9000 för att lyssna för requests.
 
@@ -69,8 +77,10 @@ const userSchema = new mongoose.Schema({
 });
 ```
 
-Här skapar jag ett användar schema som innehåller de properties som varje användar document ska innehålla som ex: namn,email och lösenord osv.
-Schemat innehåller även vilken roll använderen har och vilken typ alla properties ska vara.
+Här skapar jag ett användar schema som innehåller de properties som varje användar dokument ska innehålla som ex: namn,email och lösenord.
+Schemat innehåller även vilken roll använderen har och vilken typ alla properties är.
+
+Detta schemat är då den struktur som varje användar dokument kommer se ut i databasen (mongodb i detta fall).
 
 ### Middleware
 
@@ -85,7 +95,13 @@ userSchema.pre("save", async function (next) {
 
 ```
 
-I samma fil som förgående stycke skapar jag en middleware för användarna som säger att när ett nytt document skapas eller ändras så kollar middlewaren om propertien password har ändras och isåfall krypteras lösenordet innan det sedan sparas till databasen så att lösenordet säkras.
+I samma fil som förgående stycke skapar jag en middleware för användarna som säger att när ett nytt document skapas eller ändras så
+kollar middlewaren om propertien password har ändras och isåfall krypteras lösenordet innan det sedan sparas till databasen så att
+lösenordet säkras.
+
+Jag använder bcrypt bilioteket för att hasha lösenorden och använder en kostnadsfaktor på 8. Denna kostnadsfaktor bestämmer hur
+väl och säkert något ska krypteras och ju högre man sätter siffran ju säkrare blir krypteringen men operationen blir exponentiellt
+långsammare. Standard faktorn brukar vara mellan 10-12 men för effektivitet har jag valt 8.
 
 ```
 const verifyToken = (req: Request, res: Response, next: NextFunction) => {
@@ -110,10 +126,12 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
 };
 ```
 
-Här är yttligare en middlware vars syfte är att kolla om det finns en auth_token via cookies för att se om användaren är inloggad.
-Om det finns en token så decodar vi cookien som innehåller data som signerats tidigare när cookie skapades. Sen skapar vi nya properties till
-request objektet så att datan går att komma åt senare i endpointen. Sist kallas next funktionen så resterande middlwares kallas.
-I catch blocket hamnar vi om något gick fel (error).
+Här är yttligare en middleware vars syfte är att kolla om det finns en cookie vid namn auth_token för att se om användaren är inloggad.
+Om det då finns en cookie vid namn auth_token så används jwt för att jämföra om den token skapades med rätt nyckel. Om nyckeln stämmer så är
+allt som det ska och vi påbörjar att lägga till properties till request objektet för att vi senare ska kunna komma åt denna information smidigt.
+Tillsist så kallas next funktionen vilket innebör att denna middlewares arbete är färdig och nästkommande middleware kan påbörja sina operationer.
+Om något däremot går fel under tiden så fångar catch blocket upp felet (error) och retunerar en statuskod och json och näst kommande middleware
+kommer inte att kallas.
 
 ### Config
 
@@ -132,13 +150,14 @@ export default transporter;
 
 ```
 
-Här configurerar jag nodemailer (npm paket) så att sidan kan skicka mail vid behov. Här skriver jag endast in vilken service gmail i detta fall samt inloggningen till
-mail adressen som jag får från mina miljö variablar så att den informationen inte är synlig i koden.
+Här configurerar jag nodemailer ännu ett npm paket så att sidan kan skicka mail vid autentisering av emailen. Här skriver jag endast
+in vilken service mailen ska använda sig av (gmail i detta fall) samt inloggningen till mail adressen som jag kommer åt från
+miljö variablar så att den informationen inte är synlig i koden.
 
 ### Utils
 
 ```
-const createAuthToken = (req: Request, res: Response, user: UserType) => {
+const createAuthToken = (_: Request, res: Response, user: UserType) => {
   const token = jwt.sign(
     {
       userId: user.id,
@@ -163,9 +182,11 @@ const createAuthToken = (req: Request, res: Response, user: UserType) => {
 
 ```
 
-Jag har en utils map som jag skriver kod som jag använder ett fler tal gånger som denna createAuthToken funktionen. Här skapar jag en token vars jag "signerar" in data
-som jag vill att cookie ska innehålla via jsonwebtoken paketet. Datan är första argumentet, andra argumentet är den säkra nyckeln som sedan behövs användas för att
-"låsa" upp datan igen så att inte vem som kan göra detta. Tredje argumentet är tokenens livslängd. Sedan sätter jag en http cookie i response objektet med den token som nyss skapades definerade kakans livslängd och om den ska vara säker eller bara via http.
+Innti utils mapen så har jag kod som återanvänds på flera ställen så att jag inte behöver skriva samma kod flera gånger. I just denna kod
+så skapas den token som jag skrev om innan (auth_token). Här använder jag mig av jwt återigen för att embeda data i denna token så
+att den senare kan kommas åt vid behov. Som andra argument av denna sign funktionen så matar jag in den nyckel som är "ansvarig" för
+denna token så att man bara kan komma åt denna data om man har denna nyckel, vilket ökar säkerheten. Sista argumentet i sign funktionen
+är ett objekt som man kan definera olika valmöjligheter för tokenen, vilket i detta fall ändast är livslängden (1dag).
 
 ```
 export const sendVerificationEmail = (email: string, token: string) => {
@@ -189,8 +210,8 @@ export const sendVerificationEmail = (email: string, token: string) => {
 };
 ```
 
-Här här jag en till funktion i min utils map som hör samman med nodemailer configurationen. Här använder jag transporten som skapades i configen och skickar
-ett mail med den services + inloggningen samt mailOptions objetket med behövliga properties som jag skapade i funktionen.
+Här här jag en till funktion i min utils map som hör samman med nodemailer configurationen. Här använder jag transporten som skapades i
+configen och skickar ett mail med den servicen + inloggningen samt mailOptions objetket med behövliga properties som jag skapade i funktionen.
 
 ### Routes
 
@@ -238,4 +259,10 @@ router.post(
 );
 ```
 
-Här skapar jag en login route där jag först använder mig av check funktione från express validator paketet för att kolla om det är en email och att lösenordets längd är tillräcklig. Sedan kollar jag om jag fick något error från check funktionerna med validationResult funktionen. Sen tas emailen och lösenordet från requesten och kollar om det finns något konto med den mailen, om inte retunerar vi med ett meddelande "invalide credentials". Om emailen finns kollar vi om den är verifierad och om inte händer samma sak som innan. Sen använder vi bcrypt paketet för att kolla om lösenordet vi fick från requesten matchar med lösenordet från databasen, ifall det inte matchar blir det ännu ett "invalid credentials". Om allt matchar så skapas en token och en cookie skickas med responsen som vi tidgare sätt, samt ett meddelande som säger att allt gick bra.
+Här skapar jag en login route där jag först använder mig av check funktione från express validator paketet för att kolla om det
+är en email och att lösenordets längd är tillräcklig. Sedan kollar jag om jag fick något error från check funktionerna med
+validationResult funktionen. Sen tas emailen och lösenordet från requesten och kollar om det finns något konto med den mailen,
+om inte retunerar vi med ett meddelande "invalide credentials". Om emailen finns kollar vi om den är verifierad och om inte händer
+samma sak som innan. Sen använder vi bcrypt paketet för att kolla om lösenordet vi fick från requesten matchar med lösenordet från
+databasen, ifall det inte matchar blir det ännu ett "invalid credentials". Om allt matchar så skapas en token och en cookie skickas
+med responsen som vi tidgare sätt, samt ett meddelande som säger att allt gick bra.
