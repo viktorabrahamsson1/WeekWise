@@ -1,5 +1,12 @@
 # Fullstack productivity + calender app with the mern stack
 
+## Introduktion
+
+Detta projekt är ett slutprojekt i kursen webserverprogrammering och är en kalender och produktivitets webb-app som är byggd med mern stacken
+(mongodb,express,react och node). På klient sidan av applikationen så använder jag mig av react, react query, react router och tailwind. Jag
+använder mig utav typescript på både klient och servern. Denna dokumentation kommer inte att innehålla klient sidan av applikationen utan
+endast server sidan.
+
 ## Server (node, express, mongodb)
 
 ### index.ts
@@ -270,3 +277,38 @@ Sen tas emailen och lösenordet från requesten och kollar om det finns något k
 paketet för att kolla om lösenordet vi fick från requesten matchar med lösenordet från databasen, ifall det inte matchar blir det ännu
 ett "invalid credentials". Om allt matchar så skapas en token och en cookie skickas med responsen som vi tidgare sett, samt en
 statuskod och meddelande som säger att allt gick bra.
+
+## Request från klienten
+
+```
+export const signOut = async () => {
+  const response = await fetch(`${API_BASE_URL}/api/auth/logout`, {
+    method: "POST",
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    throw new Error("Problem signing out");
+  }
+};
+```
+
+Här är signOut requesten som skickas från klienten till servern när en användare försöker att logga ut. Nyckeln till denna funktionalitet
+är cookies och dessa cookies skickas med requesten eftersom credentials är satt till "include". Eftersom cookies är en credentails så följer
+"aktiva" cookies med i requesten, som sedan kan användas på servern och i middlewares där jag använder dem.
+
+## Diskussion
+
+Eftersom jag har haft denna kurs på distans och därmed inte varit på lektioner så har min inlärning kommit från online resurser
+såsom youtube och dokumentationer (node, npm bilioteket). Jag påbörjade min inlärningsprocess genom att kolla på en youtube
+tutorial angående node,express och backend i allmänhet för att få en överblick hur allt fungerade och hänger ihop. Jag har hört mycket
+om det såkallade "tutorial hell" och ville inte bli beroende av tutorials och valde att direkt efter introduktionen börja bygga små projekt.
+Några småprojekt senare då jag började känna mig "bekväm" med att börja bygga något större så påbörjade jag detta projekt.
+
+Under detta projektets gång stötte jag ständigt på problem och saker som jag inte visste hur man gjorde men som jag verkligen ville göra.
+Jag vände mig återigen till online resurser, speciellt dokumentation och läste mycket och försökte förstå mig på det jag ville göra. Detta
+är till stor del hur min arbetsprocess såg ut på server sidan av projektet: Jag ville göra något men visste inte hur, jag läste dokumentation
+och till viss del någon tutorial kring vissa npm paket och sedan fortsatte.
+
+Eftersom alla dessa teknologier var nya för mig, inklusive databaser spenderade jag en massa tid för att lära mig grunderna inom dessa
+innan jag implemanterade det i projeket. Detta är hur min inlärning och arbetsprocess har sett ut under projektet.
